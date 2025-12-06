@@ -1,13 +1,14 @@
-*{margin: 0dp ;padding: 0dp; box-sizing: border-box;}
+*{margin: 0 ;padding: 0; box-sizing: border-box;}
 header{
     display: flex;
     padding: 0px 20px;
     justify-content: space-between;
-    background-color: greenyellow;
+    background-color: black;
 }
 a{
     text-decoration: none;
-    color: black;
+    font-size: larger;
+    color: white;
     display: block;
 }
 
