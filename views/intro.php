@@ -31,8 +31,6 @@
         </div>
 
     </div>
-    <button onclick="window.location.href='http://localhost/web_study/excerciseCollection.html'">quay lại trang
-        chủ</button>
 </body>
 
 </html>
