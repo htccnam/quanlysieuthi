@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MENU</title>
-    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="../css/menu.css">
 </head>
 
 <body>
     <header>
         <div class="logo">
-            Trang chủ
+            <a href="#">Trang chủ</a>
         </div>
         <ul class="menu">
             <li><a href="">giới thiệu</a>
@@ -23,6 +23,7 @@
             <li><a href="">quản lý</a></li>
             <li><a href="">nhân viên</a></li>
             <li><a href="">khách hàng</a></li>
+            <li><a href="http://localhost/quanlysieuthi/views/login.php">Đăng xuất</a></li>
         </ul>
     </header>
     <!-- THẺ DIV ĐỂ CHỨA NỘI DUNG -->
