@@ -1,0 +1,49 @@
+h1 {
+    text-align: center;
+}
+
+form {
+
+    width: 1000px;
+    margin: auto;
+    padding: 20px;
+    border: 2px solid gray;
+    border-radius: 5px;
+
+
+    box-shadow: 0px 0px 15px gray;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+button {
+    width: 200px;
+    padding: 10px;
+    background-color: greenyellow;
+    color: black;
+
+}
+
+table {
+    margin-top: 5px;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 2px solid black;
+    border-radius: 6px;
+    overflow: visible;
+    background-color: #fff;
+}
+
+th,td{
+    border: 2px solid black;   /* viền giữa các ô */
+    padding: 8px;              /* khoảng cách text với viền */
+    text-align: left;           /* canh chữ bên trái */
+}

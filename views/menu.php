@@ -9,48 +9,31 @@
 </head>
 
 <body>
-    <header>
-        <div class="logo">
-            <a href="#">Trang chủ</a>
-        </div>
-        <ul class="menu">
-            <li><a href="">giới thiệu</a>
-                <ul>
-                    <li><a href="#" onclick="loadContent('intro.php', 'content-wrapper')">quản lý nhân viên</a></li>
-                    <li><a href="">thêm nhân viên</a></li>
-                </ul>
-            </li>
-            <li><a href="">quản lý</a></li>
-            <li><a href="">nhân viên</a></li>
-            <li><a href="">khách hàng</a></li>
-            <li><a href="http://localhost/quanlysieuthi/views/login.php">Đăng xuất</a></li>
-        </ul>
-    </header>
-    <!-- THẺ DIV ĐỂ CHỨA NỘI DUNG -->
-    <div id="contentArea" class="content-area">
-        <div class="content-wrapper" id="content-wrapper">
-            <p>Chọn một mục từ menu để hiển thị nội dung</p>
-        </div>
+    <div style="height: 30%;">
+        <header>
+            <div class="logo">
+                <a href="https://crmviet.vn/11-cach-gioi-thieu-san-pham-hay-nhat-dem-lai-hieu-qua-ban-hang/"
+                    target="contentFrame">Trang chủ</a>
+            </div>
+            <ul class="menu">
+                <li><a href="">Nhân viên</a>
+                    <ul>
+                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">quản lý nhân viên</a></li>
+                        <li><a href="">thống kê nhân viên</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">quản lý</a></li>
+                <li><a href="#">nhân viên</a></li>
+                <li><a href="#">khách hàng</a></li>
+                <li><button onclick="if(confirm('bạn có chắc chắc muốn đăng xuất')){window.location='login.php';}">Đăng
+                        xuất</button></li>
+            </ul>
+        </header>
     </div>
-
-    <script>
-        function loadContent(file, targetDivId) {
-            const targetDiv = document.getElementById(targetDivId);
-
-            // Hiển thị loading
-            targetDiv.innerHTML = '<p>Đang tải...</p>';
-
-            // Dùng fetch để load nội dung PHP và đổ vào div
-            fetch(file)
-                .then(response => response.text())
-                .then(data => {
-                    targetDiv.innerHTML = data;
-                })
-                .catch(error => {
-                    targetDiv.innerHTML = '<p>Lỗi khi tải nội dung: ' + error + '</p>';
-                });
-        }
-    </script>
+    <!-- THẺ DIV ĐỂ CHỨA NỘI DUNG -->
+    <div style="height: 750px; ">
+        <iframe name="contentFrame" style="width:100%; height:100%; border:none;">
+        </iframe>
+    </div>
 </body>
-
 </html>
