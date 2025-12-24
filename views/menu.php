@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUẢN LÝ SIÊU THỊ</title>
+
+    <link rel="stylesheet" href="../css/menu.css">
+</head>
+
+<body>
+
+    <div>
+        <header>
+            <div class="logo">
+                <a href="menu.php">QUẢN LÝ SIÊU THỊ</a>
+            </div>
+            <ul class="menu">
+                <li><a href="#">📦 Hàng hóa & Kho ▼</a>
+                    <ul>
+                        <li><a href="sanpham/index.php">Danh sách sản phẩm</a></li>
+                        <li><a href="loaihang/index.php">Phân loại hàng</a></li>
+                        <li><a href="thuonghieu/index.php">Thương hiệu</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#">🛒 Bán hàng ▼</a>
+                    <ul>
+                        <li><a href="donhang/index.php">Danh sách đơn hàng</a></li>
+                        <li><a href="donhang/create.php">Tạo đơn mới</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="khachhang/index.php">👥 Khách hàng</a></li>
+
+                <li><a href="tintuc/index.php">📰 Tin tức</a></li>
+
+                <li><a href="#">👔 Nhân sự ▼</a>
+                    <ul>
+                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">Danh sách nhân viên</a></li>
+                        <li><a href="nhanvien/thongke.php">Thống kê lương</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='login.php';}"
+                        style="color: #ff6b6b; font-weight: bold;">
+                        Đăng xuất ➜
+                    </button>
+                </li>
+            </ul>
+        </header>
+    </div>
+
+    <!-- THẺ DIV ĐỂ CHỨA NỘI DUNG -->
+    <div style="height: 750px; ">
+        <iframe name="contentFrame" style="width:100%; height:100%; border:none;">
+        </iframe>
+    </div>
+
+</body>
+
+</html>
