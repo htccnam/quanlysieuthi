@@ -21,17 +21,37 @@ if (isset($_POST['btnThem'])) {
         } catch (mysqli_sql_exception) {
             echo "<script> alert('Lỗi insert'); </script>";
         }
-
     }
-
 }
 
-$sqlSeclectTinTuc = "SELECT * FROM tintuc";
-$resultSelectTinTuc = mysqli_query($con, $sqlSeclectTinTuc);
+if (isset($_GET['matintuc'])) {
+    try {
+        $textMaTinTucXoa = $_GET['matintuc'];
+        mysqli_query($con, "DELETE FROM tintuc WHERE matintuc='$textMaTinTucXoa'");
+        echo "<script> alert('Xóa thành công');
+            window.location='tintuc.php'</script>";
+    } catch (mysqli_sql_exception) {
+        echo "<script> alert('Lỗi lệnh delete'); </script>";
+    }
+}
 
-//lấy data nhanvien
-$sqlSelectNhanVien = "SELECT manhanvien,tennhanvien FROM nhanvien";
-$resultSelectNhanVien = mysqli_query($con, $sqlSelectNhanVien);
+//tìm kiếm vào lấy data
+if (isset($_POST['btnTimKiem'])) {
+    $textTimKiem = $_POST['txtTimKiem'];
+} else {
+    $textTimKiem = "";
+}
+
+try {
+    $sqlSeclectTinTuc = "SELECT * FROM tintuc
+                    WHERE matintuc LIKE '%$textTimKiem%' OR manhanvien LIKE '%$textTimKiem%'";
+    $resultSelectTinTuc = mysqli_query($con, $sqlSeclectTinTuc);
+} catch (mysqli_sql_exception) {
+    echo "<script> alert('Lỗi select bảng tin tức'); </script>";
+}
+
+
+$today = date('Y-m-d');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,49 +64,57 @@ $resultSelectNhanVien = mysqli_query($con, $sqlSelectNhanVien);
 </head>
 
 <body>
-    <form action="" method="POSt" style="width: 500px; height: auto;">
-        <label for="txtMaTinTuc">Mã tin tức</label>
-        <input type="text" name="txtMaTinTuc" placeholder="Nhập mã tin tức" required>
-        <br>
+    <div style="display: flex;">
+        <form action="" method="POSt" style="width: 500px; height: auto;">
+            <label for="txtMaTinTuc">Mã tin tức</label>
+            <input type="text" name="txtMaTinTuc" placeholder="Nhập mã tin tức" required>
+            <br>
 
-        <label for="txtTieuDe">Tiêu đề</label>
-        <input type="text" name="txtTieuDe" placeholder="Nhập tiêu đề" required>
-        <br>
+            <label for="txtTieuDe">Tiêu đề</label>
+            <input type="text" name="txtTieuDe" placeholder="Nhập tiêu đề" required>
+            <br>
 
-        <label for="selectMaNhanVien">Mã nhân viên</label>
-        <select name="selectMaNhanVien" id="">
-            <?php
-            if (mysqli_num_rows($resultSelectNhanVien) > 0) {
-                while ($row = mysqli_fetch_assoc($resultSelectNhanVien)) {
-                    echo "<option>" . $row['manhanvien'] . "</option>";
+            <label for="selectMaNhanVien">Mã nhân viên tạo tin tức</label>
+            <select name="selectMaNhanVien" id="">
+                <?php
+                //lấy data nhanvien
+                $sqlSelectNhanVien = "SELECT manhanvien,tennhanvien FROM nhanvien";
+                $resultSelectNhanVien = mysqli_query($con, $sqlSelectNhanVien);
+                if (mysqli_num_rows($resultSelectNhanVien) > 0) {
+                    while ($row = mysqli_fetch_assoc($resultSelectNhanVien)) {
+                        echo "<option>" . $row['manhanvien'] . "</option>";
+                    }
                 }
-            }
-            ?>
+                ?>
 
-        </select>
-        <br>
+            </select>
+            <br>
 
-        <label for="txtNoiDung">Nội dung</label>
-        <textarea name="txtNoiDung" id="" placeholder="Nhập nội dung" style="height=60px ;width: 500px;"></textarea>
-        <br>
+            <label for="txtNoiDung">Nội dung</label>
+            <textarea name="txtNoiDung" id="" placeholder="Nhập nội dung" style="height=60px ;width: 500px;"></textarea>
+            <br>
 
-        <label for="selectLoaiTin">Loại tin</label>
-        <select name="selectLoaiTin" id="">
-            <option value="Khuyến mại"> Khuyến mại</option>
-            <option value="Thông báo">Thông báo</option>
-            <option value="Tuyển dụng">Tuyển dụng</option>
-            <option value="khuyến mại">Khuyến mại</option>
-            <option value="Khác">Khác</option>
-        </select>
-        <br>
+            <label for="selectLoaiTin">Loại tin</label>
+            <select name="selectLoaiTin" id="">
+                <option value="Khuyến mại">Khuyến mại</option>
+                <option value="Thông báo">Thông báo</option>
+                <option value="Tuyển dụng">Tuyển dụng</option>
+                <option value="Khác">Khác</option>
+            </select>
+            <br>
 
-        <label for="dtNgayDang">Ngày thêm tin</label>
-        <input type="date" name="dtNgayDang" required>
-        <br>
+            <label for="dtNgayDang">Ngày thêm tin</label>
+            <input type="date" name="dtNgayDang" value="<?php echo "$today"; ?>" readonly>
+            <br>
 
-        <button type="submit" name="btnThem">➕ Thêm</button>
+            <button type="submit" name="btnThem">➕ Thêm</button>
 
-    </form>
+        </form>
+        <form action="" method="POST" style="width: 450px;height: 70px; display: flex;">
+            <input type="text" name="txtTimKiem" placeholder="Nhập mã tin tức hoặc nhập tên nhân viên để tìm">
+            <button name="btnTimKiem">Tìm kiếm</button>
+        </form>
+    </div>
     <table>
         <thead>
             <th>MÃ TIN TỨC</th>
@@ -95,6 +123,7 @@ $resultSelectNhanVien = mysqli_query($con, $sqlSelectNhanVien);
             <th>NỘI DUNG</th>
             <th>LOẠI TIN</th>
             <th>NGÀY ĐĂNG</th>
+            <th>THAO TÁC</th>
         </thead>
         <tbody>
             <?php
@@ -107,6 +136,10 @@ $resultSelectNhanVien = mysqli_query($con, $sqlSelectNhanVien);
                     echo "<td>" . $row['noidung'] . "</td>";
                     echo "<td>" . $row['loaitin'] . "</td>";
                     echo "<td>" . $row['ngaydang'] . "</td>";
+                    echo "<td>";
+                    echo "<a href='suatintuc.php?matintuc=" . $row['matintuc'] . "'>sửa</a>";
+                    echo "<a href='?matintuc=" . $row['matintuc'] . "' name='btnXoa' onclick=\"return confirm('bạn có chắc chắn muốn xóa');\" >➖xóa</a>";
+                    echo "</td>";
                     echo "<tr>";
                 }
             }

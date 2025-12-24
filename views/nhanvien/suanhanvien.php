@@ -52,7 +52,7 @@
         <select name="selectGioiTinh" id="">
             <option value="Nam" <?php if($rowNhanVien['gioitinh'] == 'Nam') echo 'selected';?>>Nam</option>
             <option value="Nữ" <?php if($rowNhanVien['gioitinh'] == 'Nữ') echo 'selected'; ?>>Nữ</option>
-            <option value="Khác" <?php if($rowNhanVien['gioitinh'] == 'Khác') echo 'selected' ?>>Khác</option>
+            <option value="Khác" <?php if($rowNhanVien['gioitinh'] == 'Khác') echo 'selected'; ?>>Khác</option>
         </select>
 
         <br>
