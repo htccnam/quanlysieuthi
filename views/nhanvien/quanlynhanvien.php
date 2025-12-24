@@ -16,8 +16,13 @@ if (isset($_POST['btnThem'])) {
         echo "<script> alert ('mã nhân viên đã tồn tại'); </script>";
     } else {
         $sqlInsertNhanVien = "INSERT INTO nhanvien VALUES ('$textMaNhanVien','$textTenNhanVien','$textNgaySinh','$textGioiTinh','$textDiaChi','$textSoDienThoai','$textTaiKhoan','$textMatKhau')";
-        mysqli_query($con, $sqlInsertNhanVien);
-        echo "<script> alert('thêm thành công'); </script>";
+        try {
+            mysqli_query($con, $sqlInsertNhanVien);
+            echo "<script> alert('thêm thành công'); </script>";
+
+        } catch (mysqli_sql_exception) {
+            echo "<script> alert('Lỗi insert'); </script>";
+        }
     }
 
 }
@@ -39,7 +44,7 @@ if (isset($_POST['btnTimKiem'])) {
 $sqlTimKiem = "SELECT * FROM nhanvien WHERE
             manhanvien LIKE'%$textTimKiem%' OR tennhanvien LIKE '%$textTimKiem%'";
 $resultTimKiem = mysqli_query($con, $sqlTimKiem);
-if(mysqli_num_rows($resultTimKiem)==0){
+if (mysqli_num_rows($resultTimKiem) == 0) {
     echo "<script> alert('không có nhân viên'); </script>";
 }
 ?>
@@ -98,7 +103,7 @@ if(mysqli_num_rows($resultTimKiem)==0){
         </form>
         <form action="" method="POST" style="display: flex;  width: 300px; height: 70px;">
             <input type="text" name="txtTimKiem" placeholder="vui lòng nhập mã hoặc tên để tìm kiếm">
-            <button name="btnTimKiem" >Tìm kiếm</button>
+            <button name="btnTimKiem">Tìm kiếm</button>
         </form>
     </div>
     <table>

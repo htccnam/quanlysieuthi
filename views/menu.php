@@ -34,7 +34,7 @@
 
                 <li><a href="khachhang/index.php">👥 Khách hàng</a></li>
 
-                <li><a href="tintuc/index.php">📰 Tin tức</a></li>
+                <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
                 <li><a href="#">👔 Nhân sự ▼</a>
                     <ul>
