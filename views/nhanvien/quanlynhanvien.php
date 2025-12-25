@@ -47,6 +47,13 @@ $resultTimKiem = mysqli_query($con, $sqlTimKiem);
 if (mysqli_num_rows($resultTimKiem) == 0) {
     echo "<script> alert('không có nhân viên'); </script>";
 }
+
+//lấy từ xuất excel
+if (isset($_POST['txtCheckExport'])) {
+    $textCheckExport = $_POST['txtCheckExport'];
+} else {
+    $textCheckExport = "";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,10 +108,18 @@ if (mysqli_num_rows($resultTimKiem) == 0) {
 
             <button name="btnThem">➕ Thêm</button>
         </form>
-        <form action="" method="POST" style="display: flex;  width: 300px; height: 70px;">
-            <input type="text" name="txtTimKiem" placeholder="vui lòng nhập mã hoặc tên để tìm kiếm">
-            <button name="btnTimKiem">Tìm kiếm</button>
-        </form>
+        <div>
+            <form action="" method="POST" style="display: flex;  width: 450px; height: 70px;">
+                <input type="text" name="txtTimKiem" placeholder="vui lòng nhập mã hoặc tên để tìm kiếm">
+                <button name="btnTimKiem">Tìm kiếm</button>
+            </form>
+
+            <form action="exportnhanvien.php" method="GET" style="display: flex;  width: 450px; height: 70px;">
+                <input type="text" name="manhanvien" placeholder="nhập mã nhân viên để xuất" >
+                <button type="submit">Xuất Excel</button>
+            </form>
+
+        </div>
     </div>
     <table>
         <thead>
