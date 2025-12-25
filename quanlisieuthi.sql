@@ -1,26 +1,68 @@
--- Tạo database nếu chưa tồn tại
+-- 1. TẠO DATABASE
 CREATE DATABASE IF NOT EXISTS quanlysieuthi;
 
--- chạy query tạo database trước tránh lỗi
--- Chọn database để làm việc
-USE quanlysieuthi;
-
+-- 2. XÓA BẢNG CŨ (Theo thứ tự để tránh lỗi khóa ngoại)
+DROP TABLE IF EXISTS chitietdonhang;
 DROP TABLE IF EXISTS tintuc;
+DROP TABLE IF EXISTS donhang;
+DROP TABLE IF EXISTS sanpham;
+DROP TABLE IF EXISTS thuonghieu;
+DROP TABLE IF EXISTS loaihang;
+DROP TABLE IF EXISTS khachhang;
 DROP TABLE IF EXISTS nhanvien;
 
--- Tạo bảng
+-- 3. TẠO BẢNG NHÂN VIÊN (Theo code của bạn)
 CREATE TABLE nhanvien (
     manhanvien VARCHAR(50) PRIMARY KEY,
     tennhanvien VARCHAR(50),
     ngaysinh DATE,
     gioitinh VARCHAR(10),
-    diachi VARCHAR(50),
+    diachi VARCHAR(255),
     sodienthoai VARCHAR(50),
-    taikhoan VARCHAR(30),
-    matkhau VARCHAR(30)
+    taikhoan VARCHAR(30) NOT NULL UNIQUE,
+    matkhau VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE tintuc(
+-- 4. TẠO BẢNG KHÁCH HÀNG
+CREATE TABLE khachhang (
+    makhachhang VARCHAR(50) PRIMARY KEY,
+    tenkhachhang VARCHAR(50),
+    sodienthoai VARCHAR(50) NOT NULL UNIQUE,
+    diachi VARCHAR(255),
+    diemtichluy INT DEFAULT 0
+);
+
+-- 5. TẠO BẢNG LOẠI HÀNG (Danh mục)
+CREATE TABLE loaihang (
+    maloaihang VARCHAR(50) PRIMARY KEY,
+    tenloaihang VARCHAR(100)
+);
+
+-- 6. TẠO BẢNG THƯƠNG HIỆU
+CREATE TABLE thuonghieu (
+    mathuonghieu VARCHAR(50) PRIMARY KEY,
+    tenthuonghieu VARCHAR(100),
+    diachi VARCHAR(255)
+);
+
+-- 7. TẠO BẢNG SẢN PHẨM
+CREATE TABLE sanpham (
+    masanpham VARCHAR(50) PRIMARY KEY,
+    tensanpham VARCHAR(100),
+    maloaihang VARCHAR(50),
+    mathuonghieu VARCHAR(50),
+    soluong INT DEFAULT 0,
+    gianhap DECIMAL(10,0), -- Giá nhập vào
+    giaban DECIMAL(10,0),  -- Giá bán ra
+    donvitinh VARCHAR(20), -- Cái, Hộp, Kg...
+    hinhanh VARCHAR(255),
+    
+    FOREIGN KEY (maloaihang) REFERENCES loaihang(maloaihang),
+    FOREIGN KEY (mathuonghieu) REFERENCES thuonghieu(mathuonghieu)
+);
+
+-- 8. TẠO BẢNG TIN TỨC (Theo code của bạn)
+CREATE TABLE tintuc (
     matintuc VARCHAR(50) PRIMARY KEY,
     tieude VARCHAR(255),
     manhanvien VARCHAR(50),
@@ -30,17 +72,66 @@ CREATE TABLE tintuc(
 
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien)
 );
--- Thêm dữ liệu vào bảng nhanvien
-INSERT INTO nhanvien (manhanvien, tennhanvien, ngaysinh, gioitinh, diachi, sodienthoai, taikhoan, matkhau) 
-VALUES 
--- Tài khoản đầu tiên: tk=1, mk=1
-('NV001', 'Nguyễn Văn A', '1990-05-15', 'Nam', '123 Đường Lê Lợi, Quận 1, TP.HCM', '0909123456', '1', '1'),
-('NV002', 'Hoàng Hải Nam', '1990-05-15', 'Nam', 'Lục Ngạn , Bắc Ninh', '0909123456', '2', '2')
-;
--- Thêm dữ liệu vào bảng tintuc
-INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang)
-VALUES
-('TT001', 'Thông báo nghỉ lễ 30/4-1/5', 'NV001', 'Công ty sẽ nghỉ lễ từ ngày 30/4 đến hết ngày 1/5...', 'Thông báo nội bộ', '2024-04-25'),
-('TT002', 'Kế hoạch team building tháng 5', 'NV001', 'Chương trình team building sẽ được tổ chức vào ngày 15/5...', 'Hoạt động công ty', '2024-04-28'),
-('TT003', 'Hướng dẫn sử dụng hệ thống mới', 'NV001', 'Hệ thống quản lý mới sẽ được triển khai từ ngày 1/6...', 'Đào tạo', '2024-04-30');
 
+-- 9. TẠO BẢNG ĐƠN HÀNG
+CREATE TABLE donhang (
+    madonhang VARCHAR(50) PRIMARY KEY,
+    makhachhang VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
+    manhanvien VARCHAR(50),  -- Nhân viên bán đơn này
+    ngaylap DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tongtien DECIMAL(10,0),
+    trangthai VARCHAR(20) DEFAULT 'Hoàn thành', -- Chờ xử lý / Hoàn thành
+
+    FOREIGN KEY (makhachhang) REFERENCES khachhang(makhachhang),
+    FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien)
+);
+
+-- 10. TẠO BẢNG CHI TIẾT ĐƠN HÀNG
+CREATE TABLE chitietdonhang (
+    machitiet VARCHAR PRIMARY KEY, -- Cái này để tự tăng cho tiện
+    madonhang VARCHAR(50),
+    masanpham VARCHAR(50),
+    soluong INT,
+    dongia DECIMAL(10,0), -- Giá tại thời điểm bán
+    thanhtien DECIMAL(10,0),
+
+    FOREIGN KEY (madonhang) REFERENCES donhang(madonhang),
+    FOREIGN KEY (masanpham) REFERENCES sanpham(masanpham)
+);
+
+-- ===========================================
+-- THÊM DỮ LIỆU MẪU (DATA SAMPLE)
+-- ===========================================
+
+-- 1. Nhân viên
+INSERT INTO nhanvien (manhanvien, tennhanvien, ngaysinh, gioitinh, diachi, sodienthoai, taikhoan, matkhau) VALUES 
+('NV01', 'Nguyễn Văn A', '1990-05-15', 'Nam', 'Quận 1, TP.HCM', '0909123456', '1', '1'),
+('NV02', 'Hoàng Hải Nam', '1995-08-20', 'Nam', 'Bắc Ninh', '0912345678', '2', '2');
+
+-- 2. Loại hàng
+INSERT INTO loaihang (maloaihang, tenloaihang) VALUES 
+('LH01', 'Thực phẩm tươi sống'),
+('LH02', 'Đồ uống'),
+('LH03', 'Gia dụng');
+
+-- 3. Thương hiệu
+INSERT INTO thuonghieu (mathuonghieu, tenthuonghieu, diachi) VALUES 
+('TH01', 'Vinamilk', 'Việt Nam'),
+('TH02', 'Coca Cola', 'Mỹ'),
+('TH03', 'Sunhouse', 'Hàn Quốc');
+
+-- 4. Sản phẩm
+INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, gianhap, giaban, donvitinh, hinhanh) VALUES 
+('SP01', 'Sữa tươi 1L', 'LH02', 'TH01', 100, 25000, 32000, 'Hộp', 'sua.jpg'),
+('SP02', 'Nước ngọt Coca', 'LH02', 'TH02', 200, 8000, 10000, 'Lon', 'coca.jpg'),
+('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái', 'chao.jpg');
+
+-- 5. Khách hàng
+INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy) VALUES 
+('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10),
+('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng', 50);
+
+-- 6. Tin tức
+INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES
+('TT01', 'Thông báo nghỉ lễ 30/4', 'NV01', 'Nghỉ từ 30/4 đến 1/5', 'Thông báo', '2024-04-25'),
+('TT02', 'Khuyến mãi tháng 5', 'NV01', 'Giảm giá 50% toàn bộ', 'Khuyến mãi', '2024-05-01');
