@@ -91,7 +91,7 @@
                 <br>
 
                 <label for="txtNoiDung">Nội dung</label>
-                <textarea name="txtNoiDung" id="" placeholder="Nhập nội dung" style="height=60px ;width: 500px;"></textarea>
+                <textarea name="txtNoiDung" id="" placeholder="Nhập nội dung" style="height:60px ;width: 500px;"></textarea>
                 <br>
 
                 <label for="selectLoaiTin">Loại tin</label>
