@@ -1,39 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MENU</title>
+    <title>QUẢN LÝ SIÊU THỊ</title>
+
     <link rel="stylesheet" href="../css/menu.css">
 </head>
 
 <body>
-    <div style="height: 30%;">
+
+    <div>
         <header>
             <div class="logo">
-                <a href="https://crmviet.vn/11-cach-gioi-thieu-san-pham-hay-nhat-dem-lai-hieu-qua-ban-hang/"
-                    target="contentFrame">Trang chủ</a>
+                <a href="menu.php">QUẢN LÝ SIÊU THỊ</a>
             </div>
             <ul class="menu">
-                <li><a href="">Nhân viên</a>
+                <li><a href="#">📦 Hàng hóa & Kho ▼</a>
                     <ul>
-                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">quản lý nhân viên</a></li>
-                        <li><a href="">thống kê nhân viên</a></li>
+                        <li><a href="sanpham/index.php">Danh sách sản phẩm</a></li>
+                        <li><a href="phanloaihang/quanlyloaihang.php" target="contentFrame">Phân loại hàng</a></li>
+                        <li><a href="thuonghieu/index.php">Thương hiệu</a></li>
                     </ul>
                 </li>
-                <li><a href="#">quản lý</a></li>
-                <li><a href="#">nhân viên</a></li>
-                <li><a href="#">khách hàng</a></li>
-                <li><button onclick="if(confirm('bạn có chắc chắc muốn đăng xuất')){window.location='login.php';}">Đăng
-                        xuất</button></li>
+
+                <li><a href="#">🛒 Bán hàng ▼</a>
+                    <ul>
+                        <li><a href="donhang/index.php">Danh sách đơn hàng</a></li>
+                        <li><a href="donhang/create.php">Tạo đơn mới</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="khachhang/index.php">👥 Khách hàng</a></li>
+
+                <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
+
+                <li><a href="#">👔 Nhân sự ▼</a>
+                    <ul>
+                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">Danh sách nhân viên</a></li>
+                        <li><a href="nhanvien/thongke.php">Thống kê lương</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='login.php';}"
+                        style="color: #ff6b6b; font-weight: bold;">
+                        Đăng xuất ➜
+                    </button>
+                </li>
             </ul>
         </header>
     </div>
+
     <!-- THẺ DIV ĐỂ CHỨA NỘI DUNG -->
     <div style="height: 750px; ">
         <iframe name="contentFrame" style="width:100%; height:100%; border:none;">
         </iframe>
     </div>
+
 </body>
+
 </html>
