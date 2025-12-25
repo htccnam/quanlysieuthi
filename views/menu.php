@@ -27,8 +27,8 @@
 
                 <li><a href="#">🛒 Bán hàng ▼</a>
                     <ul>
-                        <li><a href="donhang/index.php">Danh sách đơn hàng</a></li>
-                        <li><a href="donhang/create.php">Tạo đơn mới</a></li>
+                        <li><a href="ban_hang/them_don.php" target="contentFrame">Tạo đơn mới</a></li>
+                        <li><a href="donhang/create.php">Chi tiết đơn hàng</a></li>
                     </ul>
                 </li>
 

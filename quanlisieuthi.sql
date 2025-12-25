@@ -55,7 +55,6 @@ CREATE TABLE sanpham (
     gianhap DECIMAL(10,0), -- Giá nhập vào
     giaban DECIMAL(10,0),  -- Giá bán ra
     donvitinh VARCHAR(20), -- Cái, Hộp, Kg...
-    hinhanh VARCHAR(255),
     
     FOREIGN KEY (maloaihang) REFERENCES loaihang(maloaihang),
     FOREIGN KEY (mathuonghieu) REFERENCES thuonghieu(mathuonghieu)
@@ -79,8 +78,7 @@ CREATE TABLE donhang (
     makhachhang VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
     manhanvien VARCHAR(50),  -- Nhân viên bán đơn này
     ngaylap DATETIME DEFAULT CURRENT_TIMESTAMP,
-    tongtien DECIMAL(10,0),
-    trangthai VARCHAR(20) DEFAULT 'Hoàn thành', -- Chờ xử lý / Hoàn thành
+    trangthai VARCHAR(20) DEFAULT 'Chờ xử lý', -- Chờ xử lý / Hoàn thành
 
     FOREIGN KEY (makhachhang) REFERENCES khachhang(makhachhang),
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien)
@@ -88,7 +86,6 @@ CREATE TABLE donhang (
 
 -- 10. TẠO BẢNG CHI TIẾT ĐƠN HÀNG
 CREATE TABLE chitietdonhang (
-    machitiet VARCHAR PRIMARY KEY, -- Cái này để tự tăng cho tiện
     madonhang VARCHAR(50),
     masanpham VARCHAR(50),
     soluong INT,
