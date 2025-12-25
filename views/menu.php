@@ -20,7 +20,7 @@
                 <li><a href="#">📦 Hàng hóa & Kho ▼</a>
                     <ul>
                         <li><a href="sanpham/index.php">Danh sách sản phẩm</a></li>
-                        <li><a href="loaihang/index.php">Phân loại hàng</a></li>
+                        <li><a href="phanloaihang/quanlyloaihang.php" target="contentFrame">Phân loại hàng</a></li>
                         <li><a href="thuonghieu/index.php">Thương hiệu</a></li>
                     </ul>
                 </li>
