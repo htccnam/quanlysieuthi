@@ -119,9 +119,9 @@ INSERT INTO thuonghieu (mathuonghieu, tenthuonghieu, diachi) VALUES
 
 -- 4. Sản phẩm
 INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, gianhap, giaban, donvitinh, hinhanh) VALUES 
-('SP01', 'Sữa tươi 1L', 'LH02', 'TH01', 100, 25000, 32000, 'Hộp', 'sua.jpg'),
-('SP02', 'Nước ngọt Coca', 'LH02', 'TH02', 200, 8000, 10000, 'Lon', 'coca.jpg'),
-('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái', 'chao.jpg');
+('SP01', 'Sữa tươi 1L', 'LH02', 'TH01', 100, 25000, 32000, 'Hộp'),
+('SP02', 'Nước ngọt Coca', 'LH02', 'TH02', 200, 8000, 10000, 'Lon'),
+('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái');
 
 -- 5. Khách hàng
 INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy) VALUES 
