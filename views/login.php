@@ -1,4 +1,5 @@
 <?php
+
 include_once("./connectdb.php");
 
 if (isset($_POST['btnDangnhap'])) {
@@ -8,6 +9,11 @@ if (isset($_POST['btnDangnhap'])) {
     $resultSelectTaiKhoan = mysqli_query($con, $selectTaiKhoan);
 
     if ((mysqli_num_rows($resultSelectTaiKhoan) > 0)) {
+        session_start();
+        // Lưu trạng thái đăng nhập
+        $_SESSION['dangnhap'] = true;
+
+        //
         header("Location: menu.php");
         exit;
     } else {
