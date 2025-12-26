@@ -1,7 +1,6 @@
 <?php 
     // Kết nối và Header
-    include_once("../../connectdb.php");
-    include_once("../header.php"); 
+    include_once("../connectdb.php");
 
     // --- LẤY DỮ LIỆU DROPDOWN ---
     $dsLoaiHang = mysqli_query($con, "SELECT * FROM loaihang");
