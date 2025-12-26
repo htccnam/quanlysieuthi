@@ -6,7 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUẢN LÝ SIÊU THỊ</title>
 
+    <!-- link phông chữ -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../css/menu.css">
+
+    <!-- add phông chữ -->
+    <style>
+        html, body { 
+                font-family: 'Roboto', sans-serif;
+            }
+    </style>
 </head>
 
 <body>
@@ -28,7 +38,7 @@
                 <li><a href="#">🛒 Bán hàng ▼</a>
                     <ul>
                         <li><a href="ban_hang/them_don.php" target="contentFrame">Tạo đơn mới</a></li>
-                        <li><a href="donhang/create.php">Chi tiết đơn hàng</a></li>
+                        <li><a href="ban_hang/chi_tiet.php" target="contentFrame">Chi tiết đơn hàng</a></li>
                     </ul>
                 </li>
 
