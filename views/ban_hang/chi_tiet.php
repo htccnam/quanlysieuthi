@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <style>
             html, body { 
-                font-family: 'Roboto', sans-serif;               
+                font-family: 'Roboto', sans-serif;            
             }
 
             table{
@@ -56,8 +56,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
 
             [popover] {
+                position: relative;
                 width: 300px;
-                margin: 50px auto;
+                margin: 30px auto;
                 padding: 20px 30px;
                 border-radius: 8px;       
                 border: 1px solid black;                                           
@@ -81,6 +82,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 padding: 10px;
                 border: 1px solid black;
                 border-radius: 4px;
+            }
+
+            .ppvcontent select{
+                width: 225px;
+                padding: 10px;
+                border: 1px solid black;
+                border-radius: 4px;
+            }
+
+            .ppvcontent button{
+                margin-top: 10px;
+                background-color: greenyellow;
+                width: 150px;
+                padding: 10px;
+                border: 1px solid black;
+                border-radius: 4px; 
             }
         </style>
     </head>
@@ -108,7 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <button popovertarget="in4"><i class="fa-regular fa-file"></i></button>
                         <div id="in4" popover>
                             <div class="ppvcontent">
-                                <h3>CHI TIẾT SẢN PHẨM</h3>
+                                <h3>CHI TIẾT SẢN PHẨM</h3>                        
                                 <label>Mã sản phẩm</label>
                                 <input type="text" name="Masanpham" value="" readonly>
                                 <label>Số lượng</label>
@@ -119,7 +136,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <input type="number" name="Thanhtien" value="" readonly>
                             </div>
                         </div>
-                        <button><i class="fa-solid fa-hammer"></i></button>
+                        <button popovertarget="repair"><i class="fa-solid fa-hammer"></i></button>
+                        <div id="repair" popover>
+                            <form class="ppvcontent">
+                                <h3>SỬA THÔNG TIN</h3>
+                                <label>Mã đơn hàng</label>
+                                <input type="text" name="Madonhang" value="" readonly>
+                                <label>Mã khách hàng</label>
+                                <select name="Makhachhang">
+                                    <option value="">--chọn khách hàng--</option>
+                                </select>
+                                <label>Mã nhân viên</label>
+                                <select name="Manhanvien">
+                                    <option value="">--Chọn nhân viên--</option>
+                                </select>
+                                <label>Mã sản phẩm</label>
+                                <select name="Masanpham">
+                                    <option value="">--Chọn sản phẩm--</option>
+                                </select>
+                                <label>số lượng</label>
+                                <input type="number" name="Soluong" value="" required>
+                                <label>đơn giá</label>
+                                <input type="number" name="Dongia" value="" required>
+                                <label>Thành tiền</label>
+                                <input type="number" name="Thanhtien" value="" readonly>
+                                <label>Trạng thái</label>
+                                <select name="Trangthai">
+                                    <option value="">--Chọn trạng thái--</option>
+                                    <option value="Choxuly">Chờ xử lý</option>
+                                    <option value="Hoanthanh">Hoàn thành</option>
+                                </select>
+                                <button type="submit">Sửa</button>
+                            </form>
+                        </div>
                         <button><i class="fa-solid fa-trash"></i></button>
                     </td>                                      
                 </tr>
