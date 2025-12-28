@@ -78,6 +78,7 @@ CREATE TABLE donhang (
     makhachhang VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
     manhanvien VARCHAR(50),  -- Nhân viên bán đơn này
     ngaylap DATETIME DEFAULT CURRENT_TIMESTAMP,
+    noinhanhang VARCHAR(50),
     trangthai VARCHAR(20) DEFAULT 'Chờ xử lý', -- Chờ xử lý / Hoàn thành
 
     FOREIGN KEY (makhachhang) REFERENCES khachhang(makhachhang),
