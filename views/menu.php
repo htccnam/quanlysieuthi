@@ -13,9 +13,10 @@
 
     <!-- add phông chữ -->
     <style>
-        html, body { 
-                font-family: 'Roboto', sans-serif;
-            }
+        html,
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
     </style>
 </head>
 
@@ -46,11 +47,7 @@
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
-                <li><a href="#">👔 Nhân sự ▼</a>
-                    <ul>
-                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">Danh sách nhân viên</a></li>
-                        <li><a href="nhanvien/thongke.php">Thống kê lương</a></li>
-                    </ul>
+                <li><a href="nhanvien.php" target="contentFrame">👔 Nhân sự ▼</a>
                 </li>
 
                 <li>
