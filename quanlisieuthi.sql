@@ -125,11 +125,9 @@ INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, g
 ('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái');
 
 -- 5. Khách hàng
-INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy,taikhoan,matkhau) VALUES 
-('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10,'admin','admin'),
-('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng',50, '1','1');
-
-
+INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy) VALUES 
+('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10),
+('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng', 50);
 
 -- 6. Tin tức
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES
