@@ -9,7 +9,6 @@ CREATE TABLE nhanvien (
     gioitinh VARCHAR(10),
     diachi VARCHAR(255),
     sodienthoai VARCHAR(50)
-) ENGINE=InnoDB;
 );
 
 -- ===============================
