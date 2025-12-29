@@ -1,15 +1,27 @@
 <?php
+
 include_once("./connectdb.php");
+session_start();
 
 if (isset($_POST['btnDangnhap'])) {
     $textTaiKhoan = $_POST['txtTaiKhoan'];
     $textMatKhau = $_POST['txtMatKhau'];
-    $selectTaiKhoan = "SELECT * FROM nhanvien WHERE taikhoan = '$textTaiKhoan' and matkhau = '$textMatKhau'";
+    $selectTaiKhoan = "SELECT * FROM khachhang WHERE taikhoan = '$textTaiKhoan' and matkhau = '$textMatKhau'";
     $resultSelectTaiKhoan = mysqli_query($con, $selectTaiKhoan);
+    $rowresult = mysqli_fetch_assoc($resultSelectTaiKhoan);
 
     if ((mysqli_num_rows($resultSelectTaiKhoan) > 0)) {
-        header("Location: menu.php");
-        exit;
+         // ⭐ BẮT BUỘC PHẢI CÓ
+        $_SESSION['makhachhang'] = $row['makhachhang'];
+        $_SESSION['tenkhachhang'] = $row['tenkhachhang'];
+
+        if ($rowresult['taikhoan'] == "admin" && $rowresult['matkhau'] = "admin") {
+            header("Location:menu_admin.php");
+            exit;
+        } else {
+            header("Location:../khachhangviews/menu_khachhang.php");
+            exit;
+        }
     } else {
         echo "<script> alert ('tài khoản hoặc mật khẩu không chính xác'); </script>";
     }
@@ -27,7 +39,7 @@ if (isset($_POST['btnDangnhap'])) {
 </head>
 
 <body>
-    <form action="" method="POST">
+    <form action="" method="POST" style="height: 300px;width: 500px;margin-top: 100px;">
         <label for="txtTaiKhoan">Tài khoản</label>
         <input type="text" name="txtTaiKhoan" required>
         <br>

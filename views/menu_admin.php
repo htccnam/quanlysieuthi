@@ -13,9 +13,10 @@
 
     <!-- add phông chữ -->
     <style>
-        html, body { 
-                font-family: 'Roboto', sans-serif;
-            }
+        html,
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
     </style>
 </head>
 
@@ -24,12 +25,12 @@
     <div>
         <header>
             <div class="logo">
-                <a href="menu.php">QUẢN LÝ SIÊU THỊ</a>
+                <a href="logo.php" target="contentFrame">QUẢN LÝ SIÊU THỊ</a>
             </div>
             <ul class="menu">
                 <li><a href="#">📦 Hàng hóa & Kho ▼</a>
                     <ul>
-                        <li><a href="sanpham/quanlysanpham.php">Danh sách sản phẩm</a></li>
+                        <li><a href="sanpham/quanlysanpham.php" target="contentFrame">Danh sách sản phẩm</a></li>
                         <li><a href="phanloaihang/quanlyloaihang.php" target="contentFrame">Phân loại hàng</a></li>
                         <li><a href="thuonghieu/quanlythuonghieu.php" target="contentFrame">Thương hiệu</a></li>
                     </ul>
@@ -41,16 +42,23 @@
                         <li><a href="ban_hang/chi_tiet.php" target="contentFrame">Chi tiết đơn hàng</a></li>
                     </ul>
                 </li>
+                
 
-                <li><a href="khachhang/index.php">👥 Khách hàng</a></li>
+                <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">👥 Khách hàng</a></li>
+                <!--Khách hàng-->
+                <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navKhachHang" role="button" data-bs-toggle="dropdown">
+                   Khách hàng
+                 </a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="">Danh sách khách hàng</a></li>
+                     <li><a class="dropdown-item" href="">Lịch sử mua hàng</a></li>
+                   </ul>
+                 </li>
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
-                <li><a href="#">👔 Nhân sự ▼</a>
-                    <ul>
-                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">Danh sách nhân viên</a></li>
-                        <li><a href="nhanvien/thongke.php">Thống kê lương</a></li>
-                    </ul>
+                <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">👔 Nhân sự</a>
                 </li>
 
                 <li>

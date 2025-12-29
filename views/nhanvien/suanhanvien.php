@@ -64,14 +64,6 @@
         <input type="number" name="txtSoDienThoai" placeholder="Nhập số điện thoại" value="<?php echo $rowNhanVien['sodienthoai'] ?>" required>
         <br>
 
-        <label for="txtTaiKhoan">Tài khoản</label>
-        <input type="text" name="txtTaiKhoan" placeholder="Nhập tài khoản" value="<?php echo $rowNhanVien['taikhoan'] ?>" required>
-        <br>
-
-        <label for="txtMatKhau">Mật khẩu</label>
-        <input type="text" name="txtMatKhau" placeholder="Nhập mật khẩu" value="<?php echo $rowNhanVien['matkhau'] ?>" required>
-        <br>
-
         <button name="btnSua" onclick="return confirm('bạn có chắc chắn muốn sửa')">Sửa</button>
         <button type="button" name="btnThoat" onclick="window.location = 'quanlynhanvien.php'" >Thoát</button>
     </form>

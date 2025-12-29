@@ -4,10 +4,28 @@ if ($con->connect_error) {
     die("Kết nối thất bại: " . $con->connect_error);
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+    $Madonhang = $_POST["Madonhang"];
+    $Makhachhang = $_POST["Makhachhang"];
+    $Manhanvien = $_POST["Manhanvien"];
+    $Masanpham = $_POST["Masanpham"];
     $Soluong = $_POST["Soluong"];
     $Dongia = $_POST["Dongia"];
-}
+    $Thanhtien = $Soluong * $Dongia;
 
+    $sqlkh = "SELECT makhachhang, tenkhachhang FROM khachhang";
+    $resultkh = $con->query($sqlkh);
+
+    $sqlnv = "SELECT manhanvien, tennhanvien FROM nhanvien";
+    $resultnv = $con->query($sqlnv);
+
+    $sqlsp = "SELECT masanpham, tensanpham FROM sanpham";
+    $resultsp = $con->query($sqlsp);
+
+    $sql = "INSERT INTO donhang(madonhang, makhachhang, manhanvien) VALUES ('$Madonhang','$Makhachhang', '$Manhanvien')";
+    $sql1 = "INSERT INTO chitietdonhang VALUES ('$Madonhang','$Masanpham', $Soluong, $Dongia, $Thanhtien)";
+    $result = $con->query($sql);
+    $result1 = $con->query($sql1);
+}
 ?>
 
 
@@ -76,12 +94,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <input type="text" name="Madonhang" placeholder="Nhập mã đơn hàng*" required>
             <select name="Makhachhang">
                 <option value="">--chọn khách hàng--</option>
+                <?php 
+                    if($resultkh->num_rows > 0){
+                        while($row = $resultkh->fetch_assoc()){
+                            echo "<option value = '" . $row["makhachhang"] . "'>" . $row["tenkhachhang"] . "</option>";
+                        }
+                    }                
+                ?>
             </select>
             <select name="Manhanvien">
                 <option value="">--Chọn nhân viên--</option>
+                <?php 
+                    if($resultnv->num_rows > 0){
+                        while($row = $resultnv->fetch_assoc()){
+                            echo "<option value = '" . $row["manhanvien"] . "'>" . $row["tennhanvien"] . "</option>";
+                        }
+                    }                
+                ?>
             </select>
             <select name="Masanpham">
                 <option value="">--Chọn sản phẩm--</option>
+                <?php 
+                    if($resultsp->num_rows > 0){
+                        while($row = $resultsp->fetch_assoc()){
+                            echo "<option value = '" . $row["masanpham"] . "'>" . $row["tensanpham"] . "</option>";
+                        }
+                    }                
+                ?>
             </select>
             <input type="number" name="Soluong" placeholder="Nhập số lượng*" required>
             <input type="number" name="Dongia" placeholder="Nhập giá bán*" required>           

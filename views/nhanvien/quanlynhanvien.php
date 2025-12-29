@@ -8,14 +8,12 @@ if (isset($_POST['btnThem'])) {
     $textGioiTinh = $_POST['selectGioiTinh'];
     $textDiaChi = $_POST['txtDiaChi'];
     $textSoDienThoai = $_POST['txtSoDienThoai'];
-    $textTaiKhoan = $_POST['txtTaiKhoan'];
-    $textMatKhau = $_POST['txtMatKhau'];
 
     $textCheckMaNhanVien = mysqli_query($con, "SELECT manhanvien FROM nhanvien WHERE manhanvien='$textMaNhanVien'");
     if (mysqli_num_rows($textCheckMaNhanVien) > 0) {
         echo "<script> alert ('mã nhân viên đã tồn tại'); </script>";
     } else {
-        $sqlInsertNhanVien = "INSERT INTO nhanvien VALUES ('$textMaNhanVien','$textTenNhanVien','$textNgaySinh','$textGioiTinh','$textDiaChi','$textSoDienThoai','$textTaiKhoan','$textMatKhau')";
+        $sqlInsertNhanVien = "INSERT INTO nhanvien VALUES ('$textMaNhanVien','$textTenNhanVien','$textNgaySinh','$textGioiTinh','$textDiaChi','$textSoDienThoai')";
         try {
             mysqli_query($con, $sqlInsertNhanVien);
             echo "<script> alert('thêm thành công'); </script>";
@@ -98,14 +96,6 @@ if (isset($_POST['txtCheckExport'])) {
             <input type="number" name="txtSoDienThoai" placeholder="Nhập số điện thoại" required>
             <br>
 
-            <label for="txtTaiKhoan">Tài khoản</label>
-            <input type="text" name="txtTaiKhoan" placeholder="Nhập tài khoản" required>
-            <br>
-
-            <label for="txtMatKhau">Mật khẩu</label>
-            <input type="text" name="txtMatKhau" placeholder="Nhập mật khẩu" required>
-            <br>
-
             <button name="btnThem">➕ Thêm</button>
         </form>
         <div>
@@ -129,8 +119,6 @@ if (isset($_POST['txtCheckExport'])) {
             <th>gioitinh</th>
             <th>diachi</th>
             <th>sodienthoai</th>
-            <th>taikhoan</th>
-            <th>matkhau</th>
             <th>thaotac</th>
         </thead>
         <tbody>
@@ -144,8 +132,6 @@ if (isset($_POST['txtCheckExport'])) {
                     echo "<td>" . $row['gioitinh'] . "</td>";
                     echo "<td>" . $row['diachi'] . "</td>";
                     echo "<td>" . $row['sodienthoai'] . "</td>";
-                    echo "<td>" . $row['taikhoan'] . "</td>";
-                    echo "<td>" . $row['matkhau'] . "</td>";
 
                     echo "<td>";
                     echo "<a href='suanhanvien.php?manhanvien=" . $row['manhanvien'] . "' target = 'contentFrame'>sửa</a>";
