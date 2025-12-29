@@ -8,13 +8,15 @@ if (isset($_POST['btnThem'])) {
     $sdt = $_POST['txtSDT'];
     $diachi = $_POST['txtDiaChi'];
     $diem = $_POST['txtDiem'];
+    $taikhoan=$_POST['txtTaiKhoan'];
+    $matkhau =$_POST['txtMatKhau'];
 
     $check = mysqli_query($con, "SELECT makhachhang FROM khachhang WHERE makhachhang='$makh'");
     if (mysqli_num_rows($check) > 0) {
         echo "<script>alert('Mã khách hàng đã tồn tại');</script>";
     } else {
         $sql = "INSERT INTO khachhang VALUES 
-        ('$makh','$tenkh','$sdt','$diachi','$diem',NULL,NULL)";
+        ('$makh','$tenkh','$sdt','$diachi','$diem','$taikhoan','$matkhau')";
         mysqli_query($con, $sql);
         echo "<script>alert('Thêm thành công');</script>";
     }
@@ -65,6 +67,12 @@ $result = mysqli_query($con, $sqlSelect);
 
         <label>Điểm tích lũy</label>
         <input name="txtDiem" value="0">
+
+        <label>Tài khoản</label>
+        <input name="txtTaiKhoan">
+
+        <label>Mật khẩu</label>
+        <input name="txtMatKhau">
 
         <button name="btnThem">➕ Thêm</button>
     </form>
