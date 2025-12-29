@@ -13,9 +13,10 @@
 
     <!-- add phông chữ -->
     <style>
-        html, body { 
-                font-family: 'Roboto', sans-serif;
-            }
+        html,
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
     </style>
 </head>
 
@@ -24,7 +25,7 @@
     <div>
         <header>
             <div class="logo">
-                <a href="menu.php">QUẢN LÝ SIÊU THỊ</a>
+                <a href="logo.php" target="contentFrame">QUẢN LÝ SIÊU THỊ</a>
             </div>
             <ul class="menu">
                 <li><a href="#">📦 Hàng hóa & Kho ▼</a>
@@ -56,11 +57,7 @@
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
-                <li><a href="#">👔 Nhân sự ▼</a>
-                    <ul>
-                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">Danh sách nhân viên</a></li>
-                        <li><a href="nhanvien/thongke.php">Thống kê lương</a></li>
-                    </ul>
+                <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">👔 Nhân sự</a>
                 </li>
 
                 <li>

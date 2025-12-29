@@ -1,16 +1,6 @@
 -- 1. TẠO DATABASE
 CREATE DATABASE IF NOT EXISTS quanlysieuthi;
 
--- 2. XÓA BẢNG CŨ (Theo thứ tự để tránh lỗi khóa ngoại)
-DROP TABLE IF EXISTS chitietdonhang;
-DROP TABLE IF EXISTS tintuc;
-DROP TABLE IF EXISTS donhang;
-DROP TABLE IF EXISTS sanpham;
-DROP TABLE IF EXISTS thuonghieu;
-DROP TABLE IF EXISTS loaihang;
-DROP TABLE IF EXISTS khachhang;
-DROP TABLE IF EXISTS nhanvien;
-
 -- 3. TẠO BẢNG NHÂN VIÊN (Theo code của bạn)
 CREATE TABLE nhanvien (
     manhanvien VARCHAR(50) PRIMARY KEY,
@@ -18,9 +8,8 @@ CREATE TABLE nhanvien (
     ngaysinh DATE,
     gioitinh VARCHAR(10),
     diachi VARCHAR(255),
-    sodienthoai VARCHAR(50),
-    taikhoan VARCHAR(30) NOT NULL UNIQUE,
-    matkhau VARCHAR(30) NOT NULL
+    sodienthoai VARCHAR(50)
+    
 );
 
 -- 4. TẠO BẢNG KHÁCH HÀNG
@@ -74,12 +63,22 @@ CREATE TABLE tintuc (
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien)
 );
 
+--bảng tintuc chưa đọc hay đã đọc
+CREATE TABLE tintuc_dadoc (
+    makhachhang VARCHAR(50),
+    matintuc VARCHAR(50),
+    ngaydoc DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (makhachhang, matintuc)
+);
+
+
 -- 9. TẠO BẢNG ĐƠN HÀNG
 CREATE TABLE donhang (
     madonhang VARCHAR(50) PRIMARY KEY,
     ma_kh VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
     manhanvien VARCHAR(50),  -- Nhân viên bán đơn này
     ngaylap DATETIME DEFAULT CURRENT_TIMESTAMP,
+    noinhanhang VARCHAR(50),
     trangthai VARCHAR(20) DEFAULT 'Chờ xử lý', -- Chờ xử lý / Hoàn thành
 
     FOREIGN KEY (ma_kh) REFERENCES khach_hang(ma_kh),
@@ -103,9 +102,9 @@ CREATE TABLE chitietdonhang (
 -- ===========================================
 
 -- 1. Nhân viên
-INSERT INTO nhanvien (manhanvien, tennhanvien, ngaysinh, gioitinh, diachi, sodienthoai, taikhoan, matkhau) VALUES 
-('NV01', 'Nguyễn Văn A', '1990-05-15', 'Nam', 'Quận 1, TP.HCM', '0909123456', '1', '1'),
-('NV02', 'Hoàng Hải Nam', '1995-08-20', 'Nam', 'Bắc Ninh', '0912345678', '2', '2');
+INSERT INTO nhanvien (manhanvien, tennhanvien, ngaysinh, gioitinh, diachi, sodienthoai) VALUES 
+('NV01', 'Nguyễn Văn A', '1990-05-15', 'Nam', 'Quận 1, TP.HCM', '0909123456'),
+('NV02', 'Hoàng Hải Nam', '1995-08-20', 'Nam', 'Bắc Ninh', '0912345678');
 
 -- 2. Loại hàng
 INSERT INTO loaihang (maloaihang, tenloaihang) VALUES 
@@ -126,8 +125,9 @@ INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, g
 ('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái');
 
 -- 5. Khách hàng
-
-
+INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy) VALUES 
+('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10),
+('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng', 50);
 
 -- 6. Tin tức
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES

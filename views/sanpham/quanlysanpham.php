@@ -1,5 +1,4 @@
 <?php 
-    // Kết nối và Header
     include_once("../connectdb.php");
 
     // --- LẤY DỮ LIỆU DROPDOWN ---
