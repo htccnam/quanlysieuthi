@@ -4,26 +4,28 @@ if ($con->connect_error) {
     die("Kết nối thất bại: " . $con->connect_error);
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $Madonhang = $_POST["Madonhang"];
-    $Makhachhang = $_POST["Makhachhang"];
-    $Manhanvien = $_POST["Manhanvien"];
-    $Masanpham = $_POST["Masanpham"];
-    $Noinhanhang = $_POST["Noinhanhang"];
-    $Trangthai = $_POST["Trangthai"];
-    $Soluong = $_POST["Soluong"];
-    $Dongia = $_POST["Dongia"];
-    $Thanhtien = $_POST["Thanhtien"]; 
-
     if(isset($_POST['repair'])){
+        $Madonhang = $_POST["Madonhang"];
+        $Makhachhang = $_POST["Makhachhang"];
+        $Manhanvien = $_POST["Manhanvien"];
+        $Masanpham = $_POST["Masanpham"];
+        $Noinhanhang = $_POST["Noinhanhang"];
+        $Trangthai = $_POST["Trangthai"];
+        $Soluong = $_POST["Soluong"];
+        $Dongia = $_POST["Dongia"];
+        $Thanhtien = $_POST["Thanhtien"]; 
         $sql = "UPDATE donhang SET makhachhang='$Makhachhang', manhanvien='$Manhanvien', noinhanhang='$Noinhanhang', trangthai='$Trangthai' WHERE madonhang='$Madonhang'";
         $con->query($sql);
         $sql2 = "UPDATE chitietdonhang SET masanpham='$Masanpham', soluong='$Soluong', dongia='$Dongia', thanhtien='$Thanhtien' WHERE madonhang='$Madonhang'";
         $con->query($sql2);
-    }elseif(isset($_POST['remove'])){
+    }
+    
+    if(isset($_POST['remove'])){
+        $Madonhang = $_POST["Madonhang"];
         $sql = "DELETE FROM donhang WHERE madonhang='$Madonhang'";
         $sql1= "DELETE FROM chitietdonhang WHERE madonhang='$Madonhang'";
-        $con->query($sql);
         $con->query($sql1);
+        $con->query($sql);
     }
 }
 
@@ -241,6 +243,7 @@ $resulttb = $con->query($sqltb);
                                 </form>
                             </div>
                             <form method="post">
+                                <input type="hidden" name="Madonhang" value="<?php echo $row["madonhang"]; ?>">
                                 <button type="submit" name="remove"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </td>
