@@ -120,16 +120,15 @@ INSERT INTO thuonghieu (mathuonghieu, tenthuonghieu, diachi) VALUES
 ('TH03', 'Sunhouse', 'Hàn Quốc');
 
 -- 4. Sản phẩm
-INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, gianhap, giaban, donvitinh) VALUES 
-('SP01', 'Sữa tươi 1L', 'LH02', 'TH01', 100, 25000, 32000, 'Hộp'),
-('SP02', 'Nước ngọt Coca', 'LH02', 'TH02', 200, 8000, 10000, 'Lon'),
-('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái');
+INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, gianhap, giaban, donvitinh, hinhanh) VALUES 
+('SP01', 'Sữa tươi 1L', 'LH02', 'TH01', 100, 25000, 32000, 'Hộp', 'sua.jpg'),
+('SP02', 'Nước ngọt Coca', 'LH02', 'TH02', 200, 8000, 10000, 'Lon', 'coca.jpg'),
+('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái', 'chao.jpg');
 
 -- 5. Khách hàng
-INSERT INTO khach_hang(id, ma_kh, ho_ten, dia_chi, sdt, email, ngay_tao) VALUES
-(1,'GH001','Nguyễn Văn A', 'Việt Nam', '0913277456','A@gmail.com',2025-12-29),
-(2,'GH002','Nguyễn Văn B', 'Trung Quốc', '094561111','B@gmail.com',2025-12-2);
-
+INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy,taikhoan,matkhau) VALUES 
+('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10,'admin','admin'),
+('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng',50, '1','1');
 
 -- 6. Tin tức
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES
