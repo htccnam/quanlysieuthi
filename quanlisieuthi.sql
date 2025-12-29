@@ -13,15 +13,14 @@ CREATE TABLE nhanvien (
 );
 
 -- 4. TẠO BẢNG KHÁCH HÀNG
-CREATE TABLE khachhang (
-    makhachhang VARCHAR(50) PRIMARY KEY,
-    tenkhachhang VARCHAR(50),
-    sodienthoai VARCHAR(50),
-    diachi VARCHAR(255),
-    diemtichluy INT DEFAULT 0,
-
-    taikhoan VARCHAR(30) ,
-    matkhau VARCHAR(30) 
+CREATE TABLE khach_hang (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ma_kh VARCHAR(20) NOT NULL UNIQUE,
+    ho_ten VARCHAR(100) NOT NULL,
+    dia_chi TEXT,
+    sdt VARCHAR(15) NOT NULL UNIQUE,
+    email VARCHAR(100) UNIQUE,
+    ngay_tao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 5. TẠO BẢNG LOẠI HÀNG (Danh mục)
@@ -76,13 +75,13 @@ CREATE TABLE tintuc_dadoc (
 -- 9. TẠO BẢNG ĐƠN HÀNG
 CREATE TABLE donhang (
     madonhang VARCHAR(50) PRIMARY KEY,
-    makhachhang VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
+    ma_kh VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
     manhanvien VARCHAR(50),  -- Nhân viên bán đơn này
     ngaylap DATETIME DEFAULT CURRENT_TIMESTAMP,
     noinhanhang VARCHAR(50),
     trangthai VARCHAR(20) DEFAULT 'Chờ xử lý', -- Chờ xử lý / Hoàn thành
 
-    FOREIGN KEY (makhachhang) REFERENCES khachhang(makhachhang),
+    FOREIGN KEY (ma_kh) REFERENCES khach_hang(ma_kh),
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien)
 );
 
@@ -129,6 +128,8 @@ INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, g
 INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy,taikhoan,matkhau) VALUES 
 ('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10,'admin','admin'),
 ('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng',50, '1','1');
+
+
 
 -- 6. Tin tức
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES

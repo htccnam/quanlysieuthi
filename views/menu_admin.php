@@ -42,8 +42,19 @@
                         <li><a href="ban_hang/chi_tiet.php" target="contentFrame">Chi tiết đơn hàng</a></li>
                     </ul>
                 </li>
+                
 
                 <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">👥 Khách hàng</a></li>
+                <!--Khách hàng-->
+                <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navKhachHang" role="button" data-bs-toggle="dropdown">
+                   Khách hàng
+                 </a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="">Danh sách khách hàng</a></li>
+                     <li><a class="dropdown-item" href="">Lịch sử mua hàng</a></li>
+                   </ul>
+                 </li>
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
