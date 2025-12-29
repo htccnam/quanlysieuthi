@@ -39,7 +39,7 @@ if (isset($_POST['btnDangnhap'])) {
 </head>
 
 <body>
-    <form action="" method="POST" style="height: 400px;width: 500px;">
+    <form action="" method="POST" style="height: 300px;width: 500px;margin-top: 100px;">
         <label for="txtTaiKhoan">Tài khoản</label>
         <input type="text" name="txtTaiKhoan" required>
         <br>

@@ -47,9 +47,10 @@ $result = mysqli_query($con, $sqlSelect);
 
 <body>
 
-    <h2>QUẢN LÝ KHÁCH HÀNG</h2>
+    
 
     <form method="POST" style="width:450px">
+        <h1>QUẢN LÝ KHÁCH HÀNG</h1>
         <label>Mã KH</label>
         <input name="txtMaKH" required>
 

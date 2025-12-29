@@ -8,14 +8,12 @@ if (isset($_POST['btnThem'])) {
     $textGioiTinh = $_POST['selectGioiTinh'];
     $textDiaChi = $_POST['txtDiaChi'];
     $textSoDienThoai = $_POST['txtSoDienThoai'];
-    $textTaiKhoan = $_POST['txtTaiKhoan'];
-    $textMatKhau = $_POST['txtMatKhau'];
 
     $textCheckMaNhanVien = mysqli_query($con, "SELECT manhanvien FROM nhanvien WHERE manhanvien='$textMaNhanVien'");
     if (mysqli_num_rows($textCheckMaNhanVien) > 0) {
         echo "<script> alert ('mã nhân viên đã tồn tại'); </script>";
     } else {
-        $sqlInsertNhanVien = "INSERT INTO nhanvien VALUES ('$textMaNhanVien','$textTenNhanVien','$textNgaySinh','$textGioiTinh','$textDiaChi','$textSoDienThoai','$textTaiKhoan','$textMatKhau')";
+        $sqlInsertNhanVien = "INSERT INTO nhanvien VALUES ('$textMaNhanVien','$textTenNhanVien','$textNgaySinh','$textGioiTinh','$textDiaChi','$textSoDienThoai')";
         try {
             mysqli_query($con, $sqlInsertNhanVien);
             echo "<script> alert('thêm thành công'); </script>";
