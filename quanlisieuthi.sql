@@ -9,9 +9,9 @@ CREATE TABLE nhanvien (
     gioitinh VARCHAR(10),
     diachi VARCHAR(255),
     sodienthoai VARCHAR(50)
+    
 );
 
--- ===============================
 -- 4. TẠO BẢNG KHÁCH HÀNG
 CREATE TABLE khachhang (
     makhachhang VARCHAR(50) PRIMARY KEY,
@@ -28,7 +28,6 @@ CREATE TABLE khachhang (
 CREATE TABLE loaihang (
     maloaihang VARCHAR(50) PRIMARY KEY,
     tenloaihang VARCHAR(100)
-) ENGINE=InnoDB;
 );
 
 -- 6. TẠO BẢNG THƯƠNG HIỆU
