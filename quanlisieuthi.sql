@@ -1,16 +1,6 @@
 -- 1. TẠO DATABASE
 CREATE DATABASE IF NOT EXISTS quanlysieuthi;
 
--- 2. XÓA BẢNG CŨ (Theo thứ tự để tránh lỗi khóa ngoại)
-DROP TABLE IF EXISTS chitietdonhang;
-DROP TABLE IF EXISTS tintuc;
-DROP TABLE IF EXISTS donhang;
-DROP TABLE IF EXISTS sanpham;
-DROP TABLE IF EXISTS thuonghieu;
-DROP TABLE IF EXISTS loaihang;
-DROP TABLE IF EXISTS khachhang;
-DROP TABLE IF EXISTS nhanvien;
-
 -- 3. TẠO BẢNG NHÂN VIÊN (Theo code của bạn)
 CREATE TABLE nhanvien (
     manhanvien VARCHAR(50) PRIMARY KEY,
@@ -26,12 +16,12 @@ CREATE TABLE nhanvien (
 CREATE TABLE khachhang (
     makhachhang VARCHAR(50) PRIMARY KEY,
     tenkhachhang VARCHAR(50),
-    sodienthoai VARCHAR(50) NOT NULL UNIQUE,
+    sodienthoai VARCHAR(50),
     diachi VARCHAR(255),
     diemtichluy INT DEFAULT 0,
 
-    taikhoan VARCHAR(30) NOT NULL UNIQUE,
-    matkhau VARCHAR(30) NOT NULL
+    taikhoan VARCHAR(30) ,
+    matkhau VARCHAR(30) 
 );
 
 -- 5. TẠO BẢNG LOẠI HÀNG (Danh mục)
