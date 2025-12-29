@@ -25,7 +25,7 @@
     <div>
         <header>
             <div class="logo">
-                <a href="menu.php">QUẢN LÝ SIÊU THỊ</a>
+                <a href="logo.php" target="contentFrame">QUẢN LÝ SIÊU THỊ</a>
             </div>
             <ul class="menu">
                 <li><a href="#">📦 Hàng hóa & Kho ▼</a>
@@ -43,11 +43,11 @@
                     </ul>
                 </li>
 
-                <li><a href="khachhang/index.php">👥 Khách hàng</a></li>
+                <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">👥 Khách hàng</a></li>
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
-                <li><a href="nhanvien.php" target="contentFrame">👔 Nhân sự ▼</a>
+                <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">👔 Nhân sự</a>
                 </li>
 
                 <li>
