@@ -13,10 +13,8 @@
     $textGioiTinh= $_POST['selectGioiTinh'];
     $textDiaChi = $_POST['txtDiaChi'];
     $textSoDienThoai = $_POST['txtSoDienThoai'];
-    $textTaiKhoan = $_POST['txtTaiKhoan'];
-    $textMatKhau =$_POST['txtMatKhau'];
 
-    $sqlCapNhatNhanVien = "UPDATE nhanvien SET tennhanvien ='$textTenNhanVien' , ngaysinh= '$textNgaySinh',gioitinh='$textGioiTinh',diachi='$textDiaChi',sodienthoai='$textSoDienThoai',taikhoan='$textTaiKhoan',matkhau='$textMatKhau' WHERE manhanvien='$textMaNhanVien'";
+    $sqlCapNhatNhanVien = "UPDATE nhanvien SET tennhanvien ='$textTenNhanVien' , ngaysinh= '$textNgaySinh',gioitinh='$textGioiTinh',diachi='$textDiaChi',sodienthoai='$textSoDienThoai' WHERE manhanvien='$textMaNhanVien'";
     mysqli_query($con,$sqlCapNhatNhanVien);
 
     echo "<script> alert('Sửa thành công'); 

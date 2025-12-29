@@ -11,6 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $Masanpham = $_POST["Masanpham"];
     $Soluong = $_POST["Soluong"];
     $Dongia = $_POST["Dongia"];
+    $Noinhanhang =$_POST["Noinhanhang"];
     $Thanhtien = $Soluong * $Dongia;
 
     $sql = "INSERT INTO donhang(madonhang, makhachhang, manhanvien, noinhanhang) VALUES ('$Madonhang','$Makhachhang', '$Manhanvien', '$Noinhanhang')";
