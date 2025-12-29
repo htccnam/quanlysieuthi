@@ -98,14 +98,6 @@ if (isset($_POST['txtCheckExport'])) {
             <input type="number" name="txtSoDienThoai" placeholder="Nhập số điện thoại" required>
             <br>
 
-            <label for="txtTaiKhoan">Tài khoản</label>
-            <input type="text" name="txtTaiKhoan" placeholder="Nhập tài khoản" required>
-            <br>
-
-            <label for="txtMatKhau">Mật khẩu</label>
-            <input type="text" name="txtMatKhau" placeholder="Nhập mật khẩu" required>
-            <br>
-
             <button name="btnThem">➕ Thêm</button>
         </form>
         <div>
@@ -129,8 +121,6 @@ if (isset($_POST['txtCheckExport'])) {
             <th>gioitinh</th>
             <th>diachi</th>
             <th>sodienthoai</th>
-            <th>taikhoan</th>
-            <th>matkhau</th>
             <th>thaotac</th>
         </thead>
         <tbody>
@@ -144,8 +134,6 @@ if (isset($_POST['txtCheckExport'])) {
                     echo "<td>" . $row['gioitinh'] . "</td>";
                     echo "<td>" . $row['diachi'] . "</td>";
                     echo "<td>" . $row['sodienthoai'] . "</td>";
-                    echo "<td>" . $row['taikhoan'] . "</td>";
-                    echo "<td>" . $row['matkhau'] . "</td>";
 
                     echo "<td>";
                     echo "<a href='suanhanvien.php?manhanvien=" . $row['manhanvien'] . "' target = 'contentFrame'>sửa</a>";

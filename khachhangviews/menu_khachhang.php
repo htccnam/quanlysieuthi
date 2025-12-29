@@ -28,21 +28,14 @@
                 <a href="../views/logo.php" target="contentFrame">SIÊU THỊ</a>
             </div>
 
-                <li><a href="khachhang/quanlykhachhang.php" target="contenFrame">👥 Khách hàng</a></li>
+            <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
-                <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
-
-                </li>
-                <li><a href="hoso/hoso.php" target="contentFrame">👔 Hồ sơ cá nhân</a></li>
-
-                </li>
-
-                <li>
-                    <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='../../views/login.php';}"
-                        style="color: #ff6b6b; font-weight: bold;">
-                        Đăng xuất ➜
-                    </button>
-                </li>
+            <li>
+                <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='http://localhost/quanlysieuthi/views/login.php';}"
+                    style="color: #ff6b6b; font-weight: bold;">
+                    Đăng xuất ➜
+                </button>
+            </li>
             </ul>
         </header>
     </div>
