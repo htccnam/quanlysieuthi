@@ -16,7 +16,7 @@ if (isset($_POST['btnThem'])) {
         echo "<script>alert('Mã khách hàng đã tồn tại');</script>";
     } else {
         $sql = "INSERT INTO khachhang VALUES 
-        ('$makh','$tenkh','$sdt','$diachi','$diem','$taikhoan','$matkhau')";
+        ('$makh','$tenkh','$sdt','$diachi','$diem','$$taikhoan',''$matkhau'')";
         mysqli_query($con, $sql);
         echo "<script>alert('Thêm thành công');</script>";
     }
