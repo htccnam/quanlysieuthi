@@ -126,7 +126,9 @@ INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, g
 ('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái');
 
 -- 5. Khách hàng
-
+INSERT INTO khach_hang(id, ma_kh, ho_ten, dia_chi, sdt, email, ngay_tao) VALUES
+(1,'GH001','Nguyễn Văn A', 'Việt Nam', '0913277456','A@gmail.com',2025-12-29),
+(2,'GH002','Nguyễn Văn B', 'Trung Quốc', '094561111','B@gmail.com',2025-12-2);
 
 
 -- 6. Tin tức

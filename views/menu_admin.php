@@ -44,15 +44,15 @@
                 </li>
                 
 
-                <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">👥 Khách hàng</a></li>
+                
                 <!--Khách hàng-->
                 <li class="nav-item dropdown">
                  <a class="nav-link dropdown-toggle" href="#" id="navKhachHang" role="button" data-bs-toggle="dropdown">
-                   Khách hàng
+                  👥 Khách hàng
                  </a>
                   <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="">Danh sách khách hàng</a></li>
-                     <li><a class="dropdown-item" href="">Lịch sử mua hàng</a></li>
+                     <li><a class="dropdown-item" href="khachhang/quanlykhachhang.php">Danh sách khách hàng</a></li>
+                     
                    </ul>
                  </li>
 
