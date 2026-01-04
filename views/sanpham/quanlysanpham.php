@@ -120,8 +120,8 @@
                     <td><?php echo $row['donvitinh']; ?></td>
                     <td><?php echo number_format($row['giaban']); ?> đ</td>
                     <td>
-                        <a href="suasanpham.php?masanpham=<?php echo $row['masanpham']; ?>">Sửa</a> | 
-                        <a href="?btnXoa=1&masanpham=<?php echo $row['masanpham']; ?>" onclick="return confirm('Xóa SP này?')">Xóa</a>
+                        <a href="suasanpham.php?masanpham=<?php echo $row['masanpham']; ?>">🔨Sửa</a> | 
+                        <a href="?btnXoa=1&masanpham=<?php echo $row['masanpham']; ?>" onclick="return confirm('Xóa SP này?')">❌Xóa</a>
                     </td>
                 </tr>
             <?php } ?>

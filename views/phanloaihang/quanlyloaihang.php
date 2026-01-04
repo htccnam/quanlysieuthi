@@ -40,7 +40,7 @@ if (isset($_POST['btnTimKiem'])) {
 }
 
 $sqlTimKiem = "SELECT * FROM loaihang WHERE
-            maloaihang LIKE'%$textTimKiem%' OR tenloaihang LIKE '%$textTimKiem%'";
+            maloaihang LIKE '%$textTimKiem%' OR tenloaihang LIKE '%$textTimKiem%'";
 $resultTimKiem = mysqli_query($con, $sqlTimKiem);
 
 if (mysqli_num_rows($resultTimKiem) == 0) {

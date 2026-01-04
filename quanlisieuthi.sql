@@ -55,7 +55,6 @@ CREATE TABLE sanpham (
     gianhap DECIMAL(10,0), -- Giá nhập vào
     giaban DECIMAL(10,0),  -- Giá bán ra
     donvitinh VARCHAR(20), -- Cái, Hộp, Kg...
-    
     FOREIGN KEY (maloaihang) REFERENCES loaihang(maloaihang),
     FOREIGN KEY (mathuonghieu) REFERENCES thuonghieu(mathuonghieu)
 );

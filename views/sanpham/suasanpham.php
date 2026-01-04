@@ -1,5 +1,5 @@
 <?php 
-    include_once("../../connectdb.php");
+    include_once("../connectdb.php");
     
     // Lấy dữ liệu cũ
     $rowSP = [];
