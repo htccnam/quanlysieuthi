@@ -29,6 +29,7 @@
 </head>
 <body>
     <form action="" method="post" style="width : 500px;height: auto;">
+    <form action="" method="post" style="width:500px;height: auto;">
         <h1>Sửa thương hiệu</h1>
         <br>
         <label for="" >Mã thương hiệu</label>

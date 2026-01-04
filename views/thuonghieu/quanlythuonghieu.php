@@ -49,7 +49,7 @@
     <link rel="stylesheet" href="../../css/themsuaxoatimkiem.css">
 </head>
 <body>
-    <div style="displaty:flex">
+    <div style="display:flex">
         <form action="" method="post" style="width:500px; height:auto;">
         <h1> Quản lý thương hiệu</h1>
         <br>

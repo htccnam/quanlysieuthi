@@ -20,7 +20,8 @@ CREATE TABLE nhanvien (
     diachi VARCHAR(255),
     sodienthoai VARCHAR(50),
     taikhoan VARCHAR(30) NOT NULL UNIQUE,
-    matkhau VARCHAR(30) NOT NULL
+    matkhau VARCHAR(30) NOT NULL,
+    sodienthoai VARCHAR(50)
 );
 
 -- 4. TẠO BẢNG KHÁCH HÀNG
@@ -80,6 +81,8 @@ CREATE TABLE donhang (
     manhanvien VARCHAR(50),  -- Nhân viên bán đơn này
     ngaylap DATETIME DEFAULT CURRENT_TIMESTAMP,
     trangthai VARCHAR(20) DEFAULT 'Chờ xử lý', -- Chờ xử lý / Hoàn thành
+    noinhanhang VARCHAR(50),
+    
 
     FOREIGN KEY (ma_kh) REFERENCES khach_hang(ma_kh),
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien)
@@ -105,6 +108,9 @@ CREATE TABLE chitietdonhang (
 INSERT INTO nhanvien (manhanvien, tennhanvien, ngaysinh, gioitinh, diachi, sodienthoai, taikhoan, matkhau) VALUES 
 ('NV01', 'Nguyễn Văn A', '1990-05-15', 'Nam', 'Quận 1, TP.HCM', '0909123456', '1', '1'),
 ('NV02', 'Hoàng Hải Nam', '1995-08-20', 'Nam', 'Bắc Ninh', '0912345678', '2', '2');
+('NV01', 'Nguyễn Văn A', '1990-05-15', 'Nam', 'Quận 1, TP.HCM', '0909123456'),
+('NV02', 'Hoàng Hải Nam', '1995-08-20', 'Nam', 'Bắc Ninh', '0912345678');
+
 
 -- 2. Loại hàng
 INSERT INTO loaihang (maloaihang, tenloaihang) VALUES 
@@ -125,8 +131,9 @@ INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, g
 ('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái');
 
 -- 5. Khách hàng
-
-
+INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy,taikhoan,matkhau) VALUES 
+('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10,'admin','admin'),
+('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng', 50,'admin','admin');
 
 -- 6. Tin tức
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES

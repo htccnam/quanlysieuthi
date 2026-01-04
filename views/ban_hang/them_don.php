@@ -7,10 +7,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $Madonhang = $_POST["Madonhang"];
     $Makhachhang = $_POST["Makhachhang"];
     $Manhanvien = $_POST["Manhanvien"];
+    $Noinhanhang = $_POST["Noinhanhang"];
     $Masanpham = $_POST["Masanpham"];
     $Soluong = $_POST["Soluong"];
     $Dongia = $_POST["Dongia"];
+    $Noinhanhang =$_POST["Noinhanhang"];
     $Thanhtien = $Soluong * $Dongia;
+
+    $sql = "INSERT INTO donhang(madonhang, makhachhang, manhanvien, noinhanhang) VALUES ('$Madonhang','$Makhachhang', '$Manhanvien', '$Noinhanhang')";
+    $sql1 = "INSERT INTO chitietdonhang VALUES ('$Madonhang','$Masanpham', $Soluong, $Dongia, $Thanhtien)";
+    $result = $con->query($sql);
+    $result1 = $con->query($sql1);
+}
 
     $sqlkh = "SELECT makhachhang, tenkhachhang FROM khachhang";
     $resultkh = $con->query($sqlkh);
@@ -20,12 +28,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $sqlsp = "SELECT masanpham, tensanpham FROM sanpham";
     $resultsp = $con->query($sqlsp);
-
-    $sql = "INSERT INTO donhang(madonhang, makhachhang, manhanvien) VALUES ('$Madonhang','$Makhachhang', '$Manhanvien')";
-    $sql1 = "INSERT INTO chitietdonhang VALUES ('$Madonhang','$Masanpham', $Soluong, $Dongia, $Thanhtien)";
-    $result = $con->query($sql);
-    $result1 = $con->query($sql1);
-}
 ?>
 
 
@@ -123,7 +125,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 ?>
             </select>
             <input type="number" name="Soluong" placeholder="Nhập số lượng*" required>
-            <input type="number" name="Dongia" placeholder="Nhập giá bán*" required>           
+            <input type="number" name="Dongia" placeholder="Nhập giá bán*" required>      
+            <input type="text" name="Noinhanhang" placeholder="Nhập nơi nhận hàng*" value="Tại quầy" required>
             <button type="submit">Thêm</button>
         </form>
     </body>
