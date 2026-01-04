@@ -1,5 +1,4 @@
 <?php 
-    // Kết nối và Header
     include_once("../connectdb.php");
 
     // --- LẤY DỮ LIỆU DROPDOWN ---
@@ -22,7 +21,6 @@
         if(mysqli_num_rows($check) > 0){
             echo "<script>alert('Mã sản phẩm đã tồn tại!');</script>";
         } else {
-            // Câu lệnh INSERT đã bỏ cột hinhanh
             $sqlInsert = "INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, gianhap, giaban, donvitinh) 
                           VALUES ('$maSP', '$tenSP', '$maLoai', '$maTH', '$soLuong', '$giaNhap', '$giaBan', '$dvt')";
             
