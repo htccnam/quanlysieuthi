@@ -32,7 +32,7 @@
                     <ul>
                         <li><a href="sanpham/quanlysanpham.php" target="contentFrame">Danh sách sản phẩm</a></li>
                         <li><a href="phanloaihang/quanlyloaihang.php" target="contentFrame">Phân loại hàng</a></li>
-                        <li><a href="thuonghieu/quanlythuonghieu.php" target="contentFrame">Thương hiệu</a></li>
+                        <li><a href="nhacungcap/quanlynhacungcap.php" target="contentFrame">Nhà cung cấp</a></li>
                     </ul>
                 </li>
 
