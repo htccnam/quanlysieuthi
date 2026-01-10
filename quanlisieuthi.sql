@@ -1,6 +1,16 @@
 -- 1. TẠO DATABASE
 CREATE DATABASE IF NOT EXISTS quanlysieuthi;
 
+-- 2. XÓA BẢNG CŨ (Theo thứ tự để tránh lỗi khóa ngoại)
+DROP TABLE IF EXISTS chitietdonhang;
+DROP TABLE IF EXISTS tintuc;
+DROP TABLE IF EXISTS donhang;
+DROP TABLE IF EXISTS sanpham;
+DROP TABLE IF EXISTS thuonghieu;
+DROP TABLE IF EXISTS loaihang;
+DROP TABLE IF EXISTS khachhang;
+DROP TABLE IF EXISTS nhanvien;
+
 -- 3. TẠO BẢNG NHÂN VIÊN (Theo code của bạn)
 CREATE TABLE nhanvien (
     manhanvien VARCHAR(50) PRIMARY KEY,
@@ -8,19 +18,21 @@ CREATE TABLE nhanvien (
     ngaysinh DATE,
     gioitinh VARCHAR(10),
     diachi VARCHAR(255),
+    sodienthoai VARCHAR(50),
+    taikhoan VARCHAR(30) NOT NULL UNIQUE,
+    matkhau VARCHAR(30) NOT NULL,
     sodienthoai VARCHAR(50)
 );
 
 -- 4. TẠO BẢNG KHÁCH HÀNG
-CREATE TABLE khachhang (
-    makhachhang VARCHAR(50) PRIMARY KEY,
-    tenkhachhang VARCHAR(50),
-    sodienthoai VARCHAR(50),
-    diachi VARCHAR(255),
-    diemtichluy INT DEFAULT 0,
-
-    taikhoan VARCHAR(30) ,
-    matkhau VARCHAR(30) 
+CREATE TABLE khach_hang (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ma_kh VARCHAR(20) NOT NULL UNIQUE,
+    ho_ten VARCHAR(100) NOT NULL,
+    dia_chi TEXT,
+    sdt VARCHAR(15) NOT NULL UNIQUE,
+    email VARCHAR(100) UNIQUE,
+    ngay_tao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 5. TẠO BẢNG LOẠI HÀNG (Danh mục)
@@ -46,7 +58,6 @@ CREATE TABLE sanpham (
     gianhap DECIMAL(10,0), -- Giá nhập vào
     giaban DECIMAL(10,0),  -- Giá bán ra
     donvitinh VARCHAR(20), -- Cái, Hộp, Kg...
-    
     FOREIGN KEY (maloaihang) REFERENCES loaihang(maloaihang),
     FOREIGN KEY (mathuonghieu) REFERENCES thuonghieu(mathuonghieu)
 );
@@ -66,14 +77,14 @@ CREATE TABLE tintuc (
 -- 9. TẠO BẢNG ĐƠN HÀNG
 CREATE TABLE donhang (
     madonhang VARCHAR(50) PRIMARY KEY,
-    makhachhang VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
+    ma_kh VARCHAR(50), -- Khách mua (có thể null nếu khách vãng lai)
     manhanvien VARCHAR(50),  -- Nhân viên bán đơn này
     ngaylap DATETIME DEFAULT CURRENT_TIMESTAMP,
     trangthai VARCHAR(20) DEFAULT 'Chờ xử lý', -- Chờ xử lý / Hoàn thành
     noinhanhang VARCHAR(50),
     
 
-    FOREIGN KEY (makhachhang) REFERENCES khachhang(makhachhang),
+    FOREIGN KEY (ma_kh) REFERENCES khach_hang(ma_kh),
     FOREIGN KEY (manhanvien) REFERENCES nhanvien(manhanvien)
 );
 
@@ -95,8 +106,11 @@ CREATE TABLE chitietdonhang (
 
 -- 1. Nhân viên
 INSERT INTO nhanvien (manhanvien, tennhanvien, ngaysinh, gioitinh, diachi, sodienthoai, taikhoan, matkhau) VALUES 
+('NV01', 'Nguyễn Văn A', '1990-05-15', 'Nam', 'Quận 1, TP.HCM', '0909123456', '1', '1'),
+('NV02', 'Hoàng Hải Nam', '1995-08-20', 'Nam', 'Bắc Ninh', '0912345678', '2', '2');
 ('NV01', 'Nguyễn Văn A', '1990-05-15', 'Nam', 'Quận 1, TP.HCM', '0909123456'),
 ('NV02', 'Hoàng Hải Nam', '1995-08-20', 'Nam', 'Bắc Ninh', '0912345678');
+
 
 -- 2. Loại hàng
 INSERT INTO loaihang (maloaihang, tenloaihang) VALUES 
