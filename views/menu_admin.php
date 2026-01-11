@@ -32,7 +32,7 @@
                     <ul>
                         <li><a href="sanpham/quanlysanpham.php" target="contentFrame">Danh sách sản phẩm</a></li>
                         <li><a href="phanloaihang/quanlyloaihang.php" target="contentFrame">Phân loại hàng</a></li>
-                        <li><a href="thuonghieu/quanlythuonghieu.php" target="contentFrame">Thương hiệu</a></li>
+                        <li><a href="nhacungcap/quanlynhacungcap.php" target="contentFrame">Nhà cung cấp</a></li>
                     </ul>
                 </li>
 
@@ -42,8 +42,19 @@
                         <li><a href="ban_hang/chi_tiet.php" target="contentFrame">Chi tiết đơn hàng</a></li>
                     </ul>
                 </li>
+                
 
                 <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">👥 Khách hàng</a></li>
+                <!--Khách hàng-->
+                <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navKhachHang" role="button" data-bs-toggle="dropdown">
+                   Khách hàng
+                 </a>
+                  <ul class="dropdown-menu">
+                     <li><a class="dropdown-item" href="">Danh sách khách hàng</a></li>
+                     <li><a class="dropdown-item" href="">Lịch sử mua hàng</a></li>
+                   </ul>
+                 </li>
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
