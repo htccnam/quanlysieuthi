@@ -20,7 +20,7 @@ if(isset($_GET['btnXoa'])){
 
     $chechXoa=mysqli_execute_query($con,"select machucvu from nhanvien where machucvu='$textMaChucVu'");
     if(mysqli_num_rows($chechXoa)>0){
-        echo "<script> alert ('mã chức vụ đã được chọn cho nhân viên')  </script>";
+        echo "<script> alert ('mã chức vụ đã được chọn cho nhân viên , vui lòng xóa bên nhân viên trước')  </script>";
     }else{
         mysqli_execute_query($con,"delete from chucvu where machucvu='$textMaChucVu'");
         echo "<script> alert ('Xóa thành công')  </script>";

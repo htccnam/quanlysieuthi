@@ -56,7 +56,7 @@
                    </ul>
                  </li>
 
-                <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
+                <li><a href="khuyenmai/quanlykhuyenmai.php" target="contentFrame">📰 Khuyến mại</a></li>
 
                 <li><a href="logo.php" target="contentFrame">👔 Nhân sự</a>
                     <ul>

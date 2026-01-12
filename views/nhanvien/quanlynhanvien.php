@@ -6,19 +6,23 @@ if (isset($_POST['btnThem'])) {
     $textTenNhanVien = $_POST['txtTenNhanVien'];
     $textNgaySinh = $_POST['txtNgaySinh'];
     $textGioiTinh = $_POST['selectGioiTinh'];
-    $textDiaChi = $_POST['txtDiaChi'];
     $textSoDienThoai = $_POST['txtSoDienThoai'];
+    $textEmail = $_POST['txtEmail'];
+    $textDiaChi = $_POST['txtDiaChi'];
+    $textMaChucVu = $_POST['selectChucVu'];
+
 
     $textCheckMaNhanVien = mysqli_query($con, "SELECT manhanvien FROM nhanvien WHERE manhanvien='$textMaNhanVien'");
     if (mysqli_num_rows($textCheckMaNhanVien) > 0) {
         echo "<script> alert ('mã nhân viên đã tồn tại'); </script>";
     } else {
-        $sqlInsertNhanVien = "INSERT INTO nhanvien VALUES ('$textMaNhanVien','$textTenNhanVien','$textNgaySinh','$textGioiTinh','$textDiaChi','$textSoDienThoai')";
+
         try {
+            $sqlInsertNhanVien = "INSERT INTO nhanvien VALUES ('$textMaNhanVien','$textTenNhanVien','$textNgaySinh','$textGioiTinh','$textSoDienThoai','$textEmail','$textDiaChi','$textMaChucVu')";
             mysqli_query($con, $sqlInsertNhanVien);
             echo "<script> alert('thêm thành công'); </script>";
 
-        } catch (mysqli_sql_exception) {
+        } catch (mysqli_sql_exception $e) {
             echo "<script> alert('Lỗi insert'); </script>";
         }
     }
@@ -26,12 +30,19 @@ if (isset($_POST['btnThem'])) {
 }
 
 if (isset($_GET['btnXoa'])) {
-    $textMaNhanVienForm = $_GET['manhanvien'];
-    $sqlDelete = "DELETE FROM nhanvien WHERE manhanvien = '$textMaNhanVienForm'";
-    mysqli_query($con, $sqlDelete);
-    echo "<script> alert('xóa thành công');
+    $textMaNhanVien = $_GET['manhanvien'];
+    $checkXoaNhanVien = mysqli_execute_query($con, "select manhanvien from donhang where manhanvien='$textMaNhanVien'");
+    if (mysqli_num_rows($checkXoaNhanVien) > 0) {
+        echo "<script> alert('Nhân viên đã được tạo đơn vui lòng xóa bên tạo đơn trước') </script>";
+    } else {
+        $sqlDelete = "DELETE FROM nhanvien WHERE manhanvien = '$textMaNhanVien'";
+        mysqli_query($con, $sqlDelete);
+        echo "<script> alert('xóa thành công');
         window.location='quanlynhanvien.php';
     </script>";
+    }
+
+
 }
 
 if (isset($_POST['btnTimKiem'])) {
@@ -45,6 +56,9 @@ $resultTimKiem = mysqli_query($con, $sqlTimKiem);
 if (mysqli_num_rows($resultTimKiem) == 0) {
     echo "<script> alert('không có nhân viên'); </script>";
 }
+
+$resultSelectChucVu = mysqli_execute_query($con, "select * from chucvu");
+
 
 //lấy từ xuất excel
 if (isset($_POST['txtCheckExport'])) {
@@ -100,8 +114,19 @@ if (isset($_POST['txtCheckExport'])) {
             <label for="txtDiaChi">Địa chỉ</label>
             <input type="text" name="txtDiaChi" placeholder="Nhập địa chỉ" required>
             <br>
-            <label for="txtMachucvu">Mã chức vụ</label>
-            <input type="text" name="txtMaChuVu" placeholder="Nhập mã chức vụ">
+            <label for="selectChucVu">Chức vụ</label>
+            <select name="selectChucVu">
+                <?php
+                if (mysqli_num_rows($resultSelectChucVu) > 0) {
+                    while ($rowChucVu = mysqli_fetch_assoc($resultSelectChucVu)) {
+                        echo "<option value={$rowChucVu['machucvu']}>{$rowChucVu['machucvu']} - {$rowChucVu['tenchucvu']}
+                        </option>";
+                    }
+                } else {
+                    // echo "<option value=""></option>"";
+                }
+                ?>
+            </select>
             <br>
             <button name="btnThem">➕ Thêm</button>
         </form>
@@ -124,8 +149,11 @@ if (isset($_POST['txtCheckExport'])) {
             <th>tennhanvien</th>
             <th>ngaysinh</th>
             <th>gioitinh</th>
-            <th>diachi</th>
             <th>sodienthoai</th>
+            <th>email</th>
+            <th>diachi</th>
+            <th>machucvu</th>
+
             <th>thaotac</th>
         </thead>
         <tbody>
@@ -137,8 +165,10 @@ if (isset($_POST['txtCheckExport'])) {
                     echo "<td>" . $row['tennhanvien'] . "</td>";
                     echo "<td>" . $row['ngaysinh'] . "</td>";
                     echo "<td>" . $row['gioitinh'] . "</td>";
-                    echo "<td>" . $row['diachi'] . "</td>";
                     echo "<td>" . $row['sodienthoai'] . "</td>";
+                    echo "<td>" . $row['email'] . "</td>";
+                    echo "<td>" . $row['diachi'] . "</td>";
+                    echo "<td>" . $row['machucvu'] . "</td>";
 
                     echo "<td>";
                     echo "<a href='suanhanvien.php?manhanvien=" . $row['manhanvien'] . "' target = 'contentFrame'>sửa</a>";
