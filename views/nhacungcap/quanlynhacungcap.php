@@ -47,7 +47,7 @@ $resultTimKiem = mysqli_query($con, $sqlTimKiem);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Nhà cung cấp</title>
-    <link rel="stylesheet" href="../../css/hanghoavakho.css">
+    <link rel="stylesheet" href="../../css/sanpham.css">
 </head>
 
 <body>

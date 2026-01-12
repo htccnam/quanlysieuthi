@@ -43,7 +43,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Sửa Sản Phẩm</title>
-    <link rel="stylesheet" href="../../css/hanghoavakho.css">
+    <link rel="stylesheet" href="../../css/sanpham.css">
     
     <style>
         .form-row { display: flex; gap: 10px; }

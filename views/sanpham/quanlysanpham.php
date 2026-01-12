@@ -4,7 +4,6 @@
     $dsNCC = mysqli_query($con, "SELECT * FROM nhacungcap");
 
     if(isset($_POST['btnThem'])){
-        // Lấy dữ liệu từ Form
         $maSP = $_POST['txtMaSP'];
         $tenSP = $_POST['txtTenSP'];
         $maLoai = $_POST['slMaLoai'];
@@ -55,24 +54,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý Sản phẩm</title>
-    <link rel="stylesheet" href="../../css/hanghoavakho.css">
-    
-    <style>
-        .form-row {
-            display: flex;
-            gap: 10px;
-        }
-        .form-col {
-            flex: 1; 
-        }
-        select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="../../css/sanpham.css">
 </head>
 <body>
 
@@ -100,7 +82,7 @@
                             <select name="slMaLoai">
                                 <?php while($row = mysqli_fetch_assoc($dsLoai)){ ?>
                                     <option value="<?php echo $row['maloai']; ?>">
-                                        <?php echo $row['tenloai']; // Hoặc tenloaihang tùy DB ?>
+                                        <?php echo $row['tenloai'];?>
                                     </option>
                                 <?php } ?>
                             </select>

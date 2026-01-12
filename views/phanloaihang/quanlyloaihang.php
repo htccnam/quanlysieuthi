@@ -40,7 +40,7 @@ $result = mysqli_query($con, $sqlSelect);
     <meta charset="UTF-8">
     <title>Quản lý Loại hàng</title>
 
-    <link rel="stylesheet" href="../../css/hanghoavakho.css">
+    <link rel="stylesheet" href="../../css/sanpham.css">
 
 </head>
 
