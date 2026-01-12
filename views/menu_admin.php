@@ -28,7 +28,7 @@
                 <a href="logo.php" target="contentFrame">QUẢN LÝ SIÊU THỊ</a>
             </div>
             <ul class="menu">
-                <li><a href="#">📦 Hàng hóa & Kho ▼</a>
+                <li><a href="logo.php" target="contentFrame">📦 Hàng hóa & Kho ▼</a>
                     <ul>
                         <li><a href="sanpham/quanlysanpham.php" target="contentFrame">Danh sách sản phẩm</a></li>
                         <li><a href="phanloaihang/quanlyloaihang.php" target="contentFrame">Phân loại hàng</a></li>
@@ -36,7 +36,7 @@
                     </ul>
                 </li>
 
-                <li><a href="#">🛒 Bán hàng ▼</a>
+                <li><a href="logo.php" target="contentFrame">🛒 Bán hàng ▼</a>
                     <ul>
                         <li><a href="ban_hang/them_don.php" target="contentFrame">Tạo đơn mới</a></li>
                         <li><a href="ban_hang/chi_tiet.php" target="contentFrame">Chi tiết đơn hàng</a></li>
@@ -58,7 +58,11 @@
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
-                <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">👔 Nhân sự</a>
+                <li><a href="logo.php" target="contentFrame">👔 Nhân sự</a>
+                    <ul>
+                        <li><a href="nhanvien/quanlynhanvien.php" target="contentFrame">Quản lý nhân viên</a></li>
+                        <li><a href="chucvu/quanlychucvu.php" target="contentFrame">Quản lý chức vụ</a></li>
+                    </ul>
                 </li>
 
                 <li>

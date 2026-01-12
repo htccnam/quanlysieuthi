@@ -88,14 +88,21 @@ if (isset($_POST['txtCheckExport'])) {
             </select>
 
             <br>
-            <label for="txtDiaChi">Địa chỉ</label>
-            <input type="text" name="txtDiaChi" placeholder="Nhập địa chỉ" required>
-
-            <br>
             <label for="txtSoDienThoai">Số điện thoại</label>
             <input type="number" name="txtSoDienThoai" placeholder="Nhập số điện thoại" required>
             <br>
 
+            <br>
+            <label for="txtEmail">Email</label>
+            <input type="text" name="txtEmail" placeholder="Nhập email">
+            <br>
+            <br>
+            <label for="txtDiaChi">Địa chỉ</label>
+            <input type="text" name="txtDiaChi" placeholder="Nhập địa chỉ" required>
+            <br>
+            <label for="txtMachucvu">Mã chức vụ</label>
+            <input type="text" name="txtMaChuVu" placeholder="Nhập mã chức vụ">
+            <br>
             <button name="btnThem">➕ Thêm</button>
         </form>
         <div>
@@ -105,7 +112,7 @@ if (isset($_POST['txtCheckExport'])) {
             </form>
 
             <form action="exportnhanvien.php" method="GET" style="display: flex;  width: 450px; height: 70px;">
-                <input type="text" name="manhanvien" placeholder="nhập mã nhân viên để xuất" >
+                <input type="text" name="manhanvien" placeholder="nhập mã nhân viên để xuất">
                 <button type="submit">Xuất Excel</button>
             </form>
 
