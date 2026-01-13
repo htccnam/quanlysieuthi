@@ -38,8 +38,8 @@
 
                 <li><a href="#">🛒 Bán hàng ▼</a>
                     <ul>
-                        <li><a href="ban_hang/them_don.php" target="contentFrame">Tạo đơn mới</a></li>
-                        <li><a href="ban_hang/chi_tiet.php" target="contentFrame">Chi tiết đơn hàng</a></li>
+                        <li><a href="ban_hang/tao_don.php" target="contentFrame">Tạo đơn mới</a></li>
+                        <li><a href="ban_hang/thong_tin.php" target="contentFrame">Chi tiết đơn hàng</a></li>
                     </ul>
                 </li>
                 
