@@ -14,11 +14,12 @@ h2 {
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+
 .card {
     background: white;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -38,22 +39,23 @@ input[type="text"] {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     transition: 0.3s;
 }
 
 input[type="text"]:focus {
     border-color: #3498db;
     outline: none;
-    box-shadow: 0 0 5px rgba(52,152,219,0.3);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
 }
 
 input[readonly] {
-    background-color: #e9ecef; 
+    background-color: #e9ecef;
     color: #6c757d;
     cursor: not-allowed;
     border-color: #ced4da;
 }
+
 .btn {
     width: 100%;
     padding: 12px;
@@ -64,11 +66,15 @@ input[readonly] {
     cursor: pointer;
     transition: 0.3s;
 }
+
 .btn-add {
     background-color: #27ae60;
     color: white;
 }
-.btn-add:hover { background-color: #219150; }
+
+.btn-add:hover {
+    background-color: #219150;
+}
 
 .btn-search {
     background-color: #3498db;
@@ -76,21 +82,30 @@ input[readonly] {
     width: auto;
     padding: 10px 20px;
 }
-.btn-search:hover { background-color: #2980b9; }
+
+.btn-search:hover {
+    background-color: #2980b9;
+}
 
 .btn-save {
-    background-color: #2980b9; 
+    background-color: #2980b9;
     color: white;
-    flex: 2; 
+    flex: 2;
 }
-.btn-save:hover { background-color: #2471a3; }
+
+.btn-save:hover {
+    background-color: #2471a3;
+}
 
 .btn-cancel {
-    background-color: #95a5a6; 
+    background-color: #95a5a6;
     color: white;
-    flex: 1; 
+    flex: 1;
 }
-.btn-cancel:hover { background-color: #7f8c8d; }
+
+.btn-cancel:hover {
+    background-color: #7f8c8d;
+}
 
 .btn-group {
     display: flex;
@@ -109,7 +124,7 @@ input[readonly] {
 .left-panel {
     flex: 1;
     max-width: 350px;
-    position: sticky; 
+    position: sticky;
     top: 20px;
 }
 
@@ -127,8 +142,8 @@ input[readonly] {
 
 .edit-container {
     width: 100%;
-    max-width: 500px; 
-    margin: 80px auto; 
+    max-width: 500px;
+    margin: 80px auto;
 }
 
 table {
@@ -140,7 +155,8 @@ table {
     overflow: hidden;
 }
 
-th, td {
+th,
+td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #eee;
@@ -162,22 +178,28 @@ tr:hover {
     margin-right: 10px;
 }
 
-.edit { color: #f39c12; }
-.delete { color: #e74c3c; }
+.edit {
+    color: #f39c12;
+}
 
-.edit:hover, .delete:hover {
+.delete {
+    color: #e74c3c;
+}
+
+.edit:hover,
+.delete:hover {
     text-decoration: underline;
 }
 
 
 .right-panel {
-    min-width: 0; 
+    min-width: 0;
     display: flex;
     flex-direction: column;
 }
 
 .search-box {
-    max-width: 600px; 
+    max-width: 600px;
     width: 100%;
 }
 
@@ -188,5 +210,22 @@ tr:hover {
 }
 
 .table-responsive table {
-    white-space: nowrap; 
+    white-space: nowrap;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
