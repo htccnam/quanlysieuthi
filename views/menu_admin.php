@@ -50,6 +50,7 @@
                     <ul>
                         <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">Quản Lý Khách Hàng</a></li>
                         <li><a href="/" target="contentFrame">Hạng Thành Viên</a></li>
+                        <li><a href="/" target="contentFrame">Quy Đổi Điểm</a></li>
                     </ul>
                 </li>
 
