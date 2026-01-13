@@ -46,15 +46,12 @@
 
                 
                 <!--Khách hàng-->
-                <li class="nav-item dropdown">
-                 <a class="nav-link dropdown-toggle" href="#" id="navKhachHang" role="button" data-bs-toggle="dropdown">
-                  👥 Khách hàng
-                 </a>
-                  <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="khachhang/quanlykhachhang.php">Danh sách khách hàng</a></li>
-                     
-                   </ul>
-                 </li>
+                <li><a href="#">👥 Khách Hàng ▼</a>
+                    <ul>
+                        <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">Quản Lý Khách Hàng</a></li>
+                        <li><a href="/" target="contentFrame">Hạng Thành Viên</a></li>
+                    </ul>
+                </li>
 
                 <li><a href="tintuc/tintuc.php" target="contentFrame">📰 Tin tức</a></li>
 
