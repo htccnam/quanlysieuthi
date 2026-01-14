@@ -1,6 +1,7 @@
 <?php
 include_once("../connectdb.php");
 
+$maxNgaySinh=date('d/m/Y',strtotime('-18 years'));
 if (isset($_POST['btnThem'])) {
     $textMaNhanVien = $_POST['txtMaNhanVien'];
     $textTenNhanVien = $_POST['txtTenNhanVien'];
@@ -121,6 +122,7 @@ if (isset($_POST['txtCheckExport'])) {
     .buttonThem {
         width: auto;
         height: 40px;
+        padding: 10px;
         border: 2px solid black;
         background-color: greenyellow;
 
@@ -192,7 +194,7 @@ if (isset($_POST['txtCheckExport'])) {
 
             <div class="hang">
                 <div class="cot"><label for="txtNgaySinh">Ngày sinh</label>
-                    <input type="date" name="txtNgaySinh" required>
+                    <input type="date" name="txtNgaySinh" max="<?=$maxNgaySinh?>" required>
                 </div>
                 <div class="cot">
                     <label for="selectGioiTinh">Giới tính</label>
