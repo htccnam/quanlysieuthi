@@ -85,24 +85,24 @@ $sql_list .= " ORDER BY id DESC";
 $list_customers = mysqli_query($conn, $sql_list);
 ?>
 
-<!-- --- PHẦN 2: GIAO DIỆN HTML --- -->
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Khách Hàng - Retail System</title>
-    <!-- Nhúng Font Awesome để lấy icon -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Nhúng Font Google -->
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Link file CSS riêng biệt -->
+
     <link rel="stylesheet" href="khachhang.css">
 </head>
 <body>
 
-    <!-- Header -->
+
     <div class="navbar">
         <div class="navbar-brand">
             <i class="fa-solid fa-cart-shopping"></i> Hệ Thống Bán Lẻ
@@ -112,10 +112,10 @@ $list_customers = mysqli_query($conn, $sql_list);
         </div>
     </div>
 
-    <!-- Main Content -->
+
     <div class="container">
         
-        <!-- CỘT TRÁI: FORM NHẬP LIỆU -->
+
         <div class="card">
             <div class="card-header">
                 <span>
@@ -210,7 +210,7 @@ $list_customers = mysqli_query($conn, $sql_list);
                     <button type="submit" class="btn btn-primary" style="width: auto;">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
-                    <a href="quanly_khachhang.php" class="btn btn-secondary" style="width: auto;" title="Làm mới">
+                    <a href="quanlykhachhang.php" class="btn btn-secondary" style="width: auto;" title="Làm mới">
                         <i class="fa-solid fa-rotate-right"></i>
                     </a>
                 </form>
