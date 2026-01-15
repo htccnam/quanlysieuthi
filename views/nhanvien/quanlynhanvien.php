@@ -1,6 +1,7 @@
 <?php
 include_once("../connectdb.php");
 
+$maxNgaySinh=date('Y/m/d',strtotime('-18 years'));
 if (isset($_POST['btnThem'])) {
     $textMaNhanVien = $_POST['txtMaNhanVien'];
     $textTenNhanVien = $_POST['txtTenNhanVien'];
@@ -74,42 +75,58 @@ if (isset($_POST['txtCheckExport'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>quanlynhanvien</title>
-    <link rel="stylesheet" href="../../css/themsuaxoatimkiem.css">
+    <link rel="stylesheet" href="../../css/dinhdang1.css">
 </head>
 
 <body>
-    <div style="display: flex;">
-        <form action="" method="POST" style="width: 500px; height: auto;">
+    <div class="hang">
+        <div class="cot">
+            <form action="" method="POST" class="formnhap" style="max-width: 700px; height: auto;">
             <h1>quản lý nhân viên</h1>
             <br>
-            <label for="txtMaNhanVien">Mã nhân viên</label>
-            <input type="text" name="txtMaNhanVien" placeholder="Nhập mã nhân viên" required>
 
-            <br>
-            <label for="txtTenNhanVien">Tên nhân viên</label>
-            <input type="text" name="txtTenNhanVien" placeholder="Nhập tên nhân viên" required>
+            <div class="hang">
+                <div class="cot">
+                    <label for="txtMaNhanVien">Mã nhân viên</label>
+                    <input type="text" name="txtMaNhanVien" placeholder="Nhập mã nhân viên"  required>
+                </div>
 
-            <br>
-            <label for="txtNgaySinh">Ngày sinh</label>
-            <input type="date" name="txtNgaySinh" required>
+                <div class="cot">
+                    <label for="txtTenNhanVien">Tên nhân viên</label>
+                    <input type="text" name="txtTenNhanVien" placeholder="Nhập tên nhân viên" required>
+                </div>
 
-            <br>
-            <label for="selectGioiTinh">Giới tính</label>
-            <select name="selectGioiTinh" id="">
-                <option value="Nam">Nam</option>
-                <option value="Nữ">Nữ</option>
-                <option value="Khác">Khác</option>
-            </select>
+            </div>
 
-            <br>
-            <label for="txtSoDienThoai">Số điện thoại</label>
-            <input type="number" name="txtSoDienThoai" placeholder="Nhập số điện thoại" required>
-            <br>
 
-            <br>
-            <label for="txtEmail">Email</label>
-            <input type="text" name="txtEmail" placeholder="Nhập email">
-            <br>
+            <div class="hang">
+                <div class="cot"><label for="txtNgaySinh">Ngày sinh</label>
+                    <input type="date" name="txtNgaySinh" max="<?=$maxNgaySinh?>" required>
+                </div>
+                <div class="cot">
+                    <label for="selectGioiTinh">Giới tính</label>
+                    <select name="selectGioiTinh" id="">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <div class="hang">
+                <div class="cot"><label for="txtSoDienThoai">Số điện thoại</label>
+                    <input type="number" name="txtSoDienThoai" pattern="[0-9]{10,11}" placeholder="Nhập số điện thoại" required>
+                </div>
+
+                <div class="cot"> <label for="txtEmail">Email</label>
+                    <input type="email" name="txtEmail" placeholder="Nhập email">
+                </div>
+
+
+            </div>
+
             <br>
             <label for="txtDiaChi">Địa chỉ</label>
             <input type="text" name="txtDiaChi" placeholder="Nhập địa chỉ" required>
@@ -128,58 +145,76 @@ if (isset($_POST['txtCheckExport'])) {
                 ?>
             </select>
             <br>
-            <button name="btnThem">➕ Thêm</button>
+            <button name="btnThem" style="width: 100%;" class="buttonThem">➕ Thêm nhân viên</button>
         </form>
-        <div>
-            <form action="" method="POST" style="display: flex;  width: 450px; height: 70px;">
-                <input type="text" name="txtTimKiem" placeholder="vui lòng nhập mã hoặc tên để tìm kiếm">
-                <button name="btnTimKiem">Tìm kiếm</button>
+        </div>
+        <div class="cot">
+            <form action="" method="POST">
+                <div class="hang">
+                    <div class="cot">
+                        <input type="text" name="txtTimKiem" placeholder="vui lòng nhập mã hoặc tên để tìm kiếm">
+                    </div>
+                    <div class="cot">
+                        <button name="btnTimKiem" class="buttonTimKiem">Tìm kiếm</button>
+                    </div>
+                </div>
             </form>
 
-            <form action="exportnhanvien.php" method="GET" style="display: flex;  width: 450px; height: 70px;">
-                <input type="text" name="manhanvien" placeholder="nhập mã nhân viên để xuất">
-                <button type="submit">Xuất Excel</button>
+            <form action="exportnhanvien.php" method="GET">
+                <div class="hang">
+                    <div class="cot">
+                        <input type="text" name="manhanvien" placeholder="nhập mã nhân viên để xuất">
+                    </div>
+                    <div class="cot">
+                        <button type="submit" class="buttonKhac">Xuất Excel</button>
+                    </div>
+                </div>
             </form>
+            <h1 class="highlight">Danh sách nhân viên</h1>
+            <div class="thanhkeotable">
+                <table>
+                <thead>
+                    <th>manhanvien</th>
+                    <th>tennhanvien</th>
+                    <th>ngaysinh</th>
+                    <th>gioitinh</th>
+                    <th>sodienthoai</th>
+                    <th>email</th>
+                    <th>diachi</th>
+                    <th>machucvu</th>
+
+                    <th>thaotac</th>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($resultTimKiem && mysqli_num_rows($resultTimKiem) > 0) {
+                        while ($row = mysqli_fetch_assoc($resultTimKiem)) {
+                            echo "<tr>";
+                            echo "<td class='highlight'>" . $row['manhanvien'] . "</td>";
+                            echo "<td>" . $row['tennhanvien'] . "</td>";
+                            echo "<td>" . $row['ngaysinh'] . "</td>";
+                            echo "<td>" . $row['gioitinh'] . "</td>";
+                            echo "<td>" . $row['sodienthoai'] . "</td>";
+                            echo "<td>" . $row['email'] . "</td>";
+                            echo "<td>" . $row['diachi'] . "</td>";
+                            echo "<td>" . $row['machucvu'] . "</td>";
+
+                            echo "<td>";
+                            echo "<a href='suanhanvien.php?manhanvien=" . $row['manhanvien'] . "' target = 'contentFrame' class='buttonSua' title='Xóa'>sửa</a>";
+                            
+                            echo "<a href='?btnXoa=1&manhanvien=" . $row['manhanvien'] . "' name='btnXoa' class='buttonXoa' onclick=\"return confirm('bạn có chắc chắn muốn xóa?')\">xóa</a>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+            </div>
 
         </div>
     </div>
-    <table>
-        <thead>
-            <th>manhanvien</th>
-            <th>tennhanvien</th>
-            <th>ngaysinh</th>
-            <th>gioitinh</th>
-            <th>sodienthoai</th>
-            <th>email</th>
-            <th>diachi</th>
-            <th>machucvu</th>
 
-            <th>thaotac</th>
-        </thead>
-        <tbody>
-            <?php
-            if ($resultTimKiem && mysqli_num_rows($resultTimKiem) > 0) {
-                while ($row = mysqli_fetch_assoc($resultTimKiem)) {
-                    echo "<tr>";
-                    echo "<td>" . $row['manhanvien'] . "</td>";
-                    echo "<td>" . $row['tennhanvien'] . "</td>";
-                    echo "<td>" . $row['ngaysinh'] . "</td>";
-                    echo "<td>" . $row['gioitinh'] . "</td>";
-                    echo "<td>" . $row['sodienthoai'] . "</td>";
-                    echo "<td>" . $row['email'] . "</td>";
-                    echo "<td>" . $row['diachi'] . "</td>";
-                    echo "<td>" . $row['machucvu'] . "</td>";
-
-                    echo "<td>";
-                    echo "<a href='suanhanvien.php?manhanvien=" . $row['manhanvien'] . "' target = 'contentFrame'>sửa</a>";
-                    echo "<a href='?btnXoa=1&manhanvien=" . $row['manhanvien'] . "' name='btnXoa' onclick=\"return confirm('bạn có chắc chắn muốn xóa?')\">xóa</a>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-            }
-            ?>
-        </tbody>
-    </table>
 
 </body>
 
