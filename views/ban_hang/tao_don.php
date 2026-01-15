@@ -1,326 +1,222 @@
+<?php
+session_start();
+$con = mysqli_connect('localhost', "root", "", "quanlysieuthi");
+
+// 1. KHỞI TẠO DỮ LIỆU ĐỂ GIỮ FORM (Sticky Form)
+$old_madon = $_POST['madonhang'] ?? '';
+$old_ngay  = $_POST['ngaylap'] ?? date('Y-m-d');
+$old_nv    = $_POST['manhanvien'] ?? '';
+$old_kh    = $_POST['makhachhang'] ?? '';
+$old_pt    = $_POST['phuongthucban'] ?? 'Tại quầy';
+$old_tt    = $_POST['thanhtoan'] ?? 'Tiền mặt';
+$old_km    = $_POST['makhuyenmai'] ?? ''; 
+
+// 2. LOGIC THÊM SẢN PHẨM (Đã sửa lỗi)
+if (isset($_POST['action']) && $_POST['action'] == 'add_product') {
+    $search = $_POST['ten_sp_search'] ?? '';
+    $sl_mua = (int)($_POST['sl_input'] ?? 1);
+    
+    if (!empty($search)) {
+        // Tìm sản phẩm theo mã hoặc tên
+        $stmt = $con->prepare("SELECT masanpham, tensanpham, giaban FROM sanpham WHERE masanpham = ? OR tensanpham = ? LIMIT 1");
+        $stmt->bind_param("ss", $search, $search);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        
+        if ($sp = $res->fetch_assoc()) {
+            $found = false;
+            if(isset($_SESSION['cart'])) {
+                foreach ($_SESSION['cart'] as &$item) {
+                    if ($item['masanpham'] == $sp['masanpham']) {
+                        $item['soluong'] += $sl_mua;
+                        $found = true; 
+                        break;
+                    }
+                }
+            }
+            if (!$found) {
+                $_SESSION['cart'][] = [
+                    'masanpham'  => $sp['masanpham'],
+                    'tensanpham' => $sp['tensanpham'],
+                    'dongia'     => $sp['giaban'],
+                    'soluong'    => $sl_mua
+                ];
+            }
+        }
+    }
+}
+
+// 3. XỬ LÝ LƯU ĐƠN HÀNG
+if (isset($_POST['action']) && $_POST['action'] == 'save_order') {
+    if(!empty($_SESSION['cart'])) {
+        $final_total = $_POST['tongtien_sau_km'];
+        $sql_dh = "INSERT INTO donhang (madonhang, makhachhang, manhanvien, makhuyenmai, ngaylap, phuongthucban, thanhtoan, tongtien) 
+                   VALUES ('$old_madon', '$old_kh', '$old_nv', '$old_km', '$old_ngay', '$old_pt', '$old_tt', '$final_total')";
+        
+        if ($con->query($sql_dh)) {
+            foreach ($_SESSION['cart'] as $item) {
+                $tt_item = $item['soluong'] * $item['dongia'];
+                $con->query("INSERT INTO chitietdonhang (madonhang, masanpham, tensanpham, soluong, dongia, thanhtien) 
+                             VALUES ('$old_madon', '{$item['masanpham']}', '{$item['tensanpham']}', '{$item['soluong']}', '{$item['dongia']}', '$tt_item')");
+            }
+            unset($_SESSION['cart']);
+            echo "<script>alert('Lưu đơn hàng thành công!'); window.location.href='tao_don.php';</script>";
+        }
+    }
+}
+
+// Xử lý xóa sản phẩm
+if (isset($_GET['delete'])) {
+    $idx = $_GET['delete'];
+    if (isset($_SESSION['cart'][$idx])) {
+        unset($_SESSION['cart'][$idx]);
+        $_SESSION['cart'] = array_values($_SESSION['cart']);
+        header("Location: tao_don.php"); // Load lại trang sạch sẽ
+        exit();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Tạo Đơn Hàng Mới</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title>Tạo Đơn Hàng Hoàn Thiện</title>
     <style>
-        :root {
-            --p: #27ae60;
-            --pd: #2563eb;
-            --bg: #f3f4f6;
-            --txt: #1f2937;
-            --txt-s: #6b7280;
-            --brd: #e5e7eb;
-            --in-brd: #d1d5db;
-            --rd-xl: 0.75rem;
-            --rd-lg: 0.5rem;
-            --sh: 0 1px 2px 0 rgb(0 0 0/0.05);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--txt);
-            line-height: 1.5;
-            padding: 1rem;
-        }
-
-        @media (min-width: 768px) {
-            body {
-                padding: 2rem;
-            }
-        }
-
-        .flex {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .flex-col {
-            flex-direction: column;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .jc-between {
-            justify-content: space-between;
-        }
-
-        .w-full {
-            width: 100%;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .font-bold {
-            font-weight: 700;
-        }
-
-        .container {
-            max-width: 1024px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: var(--rd-xl);
-            border: 1px solid var(--brd);
-            box-shadow: var(--sh);
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--brd);
-            background: #34495e;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--bg);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 0.375rem;
-            color: #374151;
-        }
-
-        .form-control {
-            width: 100%;
-            height: 2.5rem;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.875rem;
-            border: 1px solid var(--in-brd);
-            border-radius: var(--rd-lg);
-            transition: 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--p);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.625rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            border-radius: var(--rd-lg);
-            cursor: pointer;
-            border: 1px solid transparent;
-            gap: 0.5rem;
-            transition: 0.2s;
-        }
-
-        .btn-p {
-            background: var(--p);
-            color: #fff;
-        }
-
-        .btn-p:hover {
-            background: var(--pd);
-        }
-
-        .btn-s {
-            background: #fff;
-            color: #4b5563;
-            border-color: var(--in-brd);
-        }
-
-        .btn-del {
-            color: #ef4444;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.375rem;
-        }
-
-        .custom-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .custom-table th {
-            background: #f9fafb;
-            padding: 1rem 1.5rem;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--txt-s);
-        }
-
-        .custom-table td {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        @media (min-width: 768px) {
-            .page-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .form-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .toolbar-grid {
-                display: grid;
-                grid-template-columns: repeat(12, 1fr);
-                gap: 1rem;
-                align-items: end;
-            }
-
-            .footer-grid {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .form-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .span-2 {
-                grid-column: span 2;
-            }
-        }
+        :root { --primary: #3498db; --success: #2ecc71; --dark: #34495e; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 20px; color: var(--dark); }
+        .grid { display: grid; grid-template-columns: 350px 1fr; gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 13px; margin-bottom: 5px; font-weight: 600; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .btn { border: none; padding: 12px; border-radius: 5px; color: white; cursor: pointer; font-weight: bold; }
+        .btn-add { background: var(--primary); width: 100px; height: 42px; }
+        .btn-save { background: var(--success); width: 100%; margin-top: 15px; font-size: 16px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { color: var(--bg); ;background: var(--dark); padding: 12px; text-align: left; border-bottom: 2px solid #eee; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        .total-area { margin-top: 20px; text-align: right; border-top: 2px solid #eee; padding-top: 10px; }
+        .discount-text { color: #e74c3c; font-weight: bold; }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <header class="card page-header" style="padding:1.5rem">
-            <div>
-                <h1 style="font-size:1.5rem;font-weight:700">Tạo Đơn Hàng Mới</h1>
-                <p style="color:var(--txt-s);font-size:0.875rem">Điền đầy đủ thông tin hệ thống</p>
+
+<form method="POST" id="mainForm">
+    <div class="grid">
+        <div class="card">
+            <h3 style="margin-top:0">📝 Thông tin hóa đơn</h3>
+            <div class="form-group"><label>Mã đơn hàng</label><input name="madonhang" value="<?= htmlspecialchars($old_madon) ?>" required></div>
+            <div class="form-group"><label>Ngày lập</label><input type="date" name="ngaylap" value="<?= $old_ngay ?>"></div>
+            
+            <div class="form-group">
+                <label>Nhân viên</label>
+                <select name="manhanvien">
+                    <?php $nvs = $con->query("SELECT * FROM nhanvien"); while($nv = $nvs->fetch_assoc()): ?>
+                        <option value="<?= $nv['manhanvien'] ?>" <?= ($old_nv==$nv['manhanvien']?'selected':'') ?>><?= $nv['tennhanvien'] ?></option>
+                    <?php endwhile; ?>
+                </select>
             </div>
-            <div class="flex items-center" style="color:var(--p);font-weight:500"><span style="width:12px;height:12px;background:var(--p);border-radius:50%"></span> ĐANG KHỞI TẠO</div>
-        </header>
 
-        <form id="orderForm" class="flex flex-col" style="gap:1.5rem">
-            <section class="card">
-                <div class="card-header">
-                    <h1 class="card-title"><i class="material-icons-round">assignment</i> Thông tin chung</h1>
-                </div>
-                <div class="card-body form-grid">
-                    <div class="form-group"><label>Mã đơn hàng <small style="color:red">*</small></label><input class="form-control" placeholder="DH-XX" required></div>
-                    <div class="form-group"><label>Ngày giao dịch</label><input type="date" class="form-control"></div>
-                    <div class="form-group"><label>Nhân viên</label><select class="form-control">
-                            <option>-- Chọn nhân viên --</option>
-                        </select></div>
-                    <div class="form-group"><label>Khách hàng</label><select class="form-control">
-                            <option>--Chọn khách hàng--</option>
-                        </select></div>
-                    <div class="form-group"><label>Phương thức bán hàng</label><select class="form-control">
-                            <option>Offline</option>
-                            <option>Online</option>
-                        </select></div>
-                    <div class="form-group"><label>Thanh toán</label><select class="form-control">
-                            <option>Chuyển khoản</option>
-                            <option>Tiền mặt</option>
-                        </select></div>
-                    <div class="form-group"><label></label></div>
-                </div>
-            </section>
+            <div class="form-group">
+                <label>Khách hàng</label>
+                <select name="makhachhang">
+                    <?php $khs = $con->query("SELECT * FROM khachhang"); while($kh = $khs->fetch_assoc()): ?>
+                        <option value="<?= $kh['makhachhang'] ?>" <?= ($old_kh==$kh['makhachhang']?'selected':'') ?>><?= $kh['tenkhachhang'] ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Mã khuyến mại</label>
+                <select name="makhuyenmai" onchange="document.getElementById('action_type').value='update_km'; this.form.submit();">
+                    <option value="">-- Không có --</option>
+                    <?php 
+                    $kms = $con->query("SELECT makhuyenmai, tenkhuyenmai FROM khuyenmai");
+                    while($km = $kms->fetch_assoc()): ?>
+                        <option value="<?= $km['makhuyenmai'] ?>" <?= ($old_km==$km['makhuyenmai']?'selected':'') ?>><?= $km['makhuyenmai'] ?> - <?= $km['tenkhuyenmai'] ?></option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
 
-            <section class="card">
-                <div class="card-header">
-                    <h1 class="card-title"><i class="material-icons-round">shopping_cart</i> Chi tiết sản phẩm</h1>
-                </div>
-                <div style="padding:1.5rem; background:rgba(239,246,255,0.3)" class="toolbar-grid">
-                    <div style="grid-column: span 5"><label style="font-size:12px;color:var(--txt-s)">TÌM KIẾM</label><input class="form-control" placeholder="Tên hoặc mã..."></div>
-                    <div style="grid-column: span 2"><label style="font-size:12px;color:var(--txt-s)">ĐƠN GIÁ</label><input class="form-control"></div>
-                    <div style="grid-column: span 2"><label style="font-size:12px;color:var(--txt-s)">SL</label><input type="number" value="1" class="form-control text-center"></div>
-                    <button type="button" class="btn btn-p w-full" style="grid-column: span 3; height:2.5rem">THÊM</button>
-                </div>
-                <div style="overflow-x:auto">
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Sản phẩm</th>
-                                <th class="text-right">Đơn giá</th>
-                                <th class="text-center">SL</th>
-                                <th class="text-right">Thành tiền</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="font-bold">Laptop Dell XPS 13</div>
-                                    <div style="font-size:12px;color:var(--txt-s)">SP001</div>
-                                </td>
-                                <td class="text-right">25,000,000 ₫</td>
-                                <td class="text-center"><input type="number" value="1" class="form-control text-center" style="width:4rem;height:2rem"></td>
-                                <td class="text-right font-bold" style="color:var(--p)">25,000,000 ₫</td>
-                                <td class="text-right"><button class="btn-del"><i class="material-icons-round">delete_outline</i></button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+            <div class="form-group">
+                <label>Phương thức bán</label>
+                <select name="phuongthucban">
+                    <option value="Tại quầy" <?= ($old_pt=='Tại quầy'?'selected':'') ?>>Tại quầy</option>
+                    <option value="Online" <?= ($old_pt=='Online'?'selected':'') ?>>Online</option>
+                </select>
+            </div>
 
-            <section class="card" style="padding:1.5rem">
-                <div class="footer-grid">
-                    <div style="max-width:24rem"><label style="font-size:14px;color:var(--txt-s);font-style:italic">Mã giảm giá</label>
-                        <div class="flex"><input class="form-control" placeholder="Mã..."><button type="button" class="btn btn-s">Áp dụng</button></div>
-                    </div>
-                    <div style="width:20rem">
-                        <div class="flex jc-between"><span>Tạm tính:</span><span class="font-bold">25,000,000 ₫</span></div>
-                        <div class="flex jc-between" style="border-top:1px solid var(--brd);margin-top:0.5rem;padding-top:0.5rem"><span style="font-size:1.1rem;font-weight:700">Tổng cộng:</span><span style="font-size:1.5rem;font-weight:700;color:var(--p)">25,000,000 ₫</span></div>
-                    </div>
+            <div class="form-group">
+                <label>Thanh toán</label>
+                <select name="thanhtoan">
+                    <option value="Tiền mặt" <?= ($old_tt=='Tiền mặt'?'selected':'') ?>>Tiền mặt</option>
+                    <option value="Chuyển khoản" <?= ($old_tt=='Chuyển khoản'?'selected':'') ?>>Chuyển khoản</option>
+                </select>
+            </div>
+            
+            <input type="hidden" name="action" id="action_type" value="save_order">
+            <button type="submit" onclick="document.getElementById('action_type').value='save_order'" class="btn btn-save">LƯU HÓA ĐƠN</button>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-top:0">📦 Chi tiết đơn hàng</h3>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: flex-end;">
+                <div style="flex: 2;">
+                    <label>Tìm sản phẩm</label>
+                    <input name="ten_sp_search" list="list_sp" placeholder="Gõ tên sản phẩm...">
+                    <datalist id="list_sp">
+                        <?php $sps = $con->query("SELECT masanpham, tensanpham FROM sanpham"); 
+                              while($s = $sps->fetch_assoc()) echo "<option value='{$s['masanpham']}'>{$s['tensanpham']}</option>"; ?>
+                    </datalist>
                 </div>
-                <div class="flex" style="justify-content:flex-end;margin-top:1.5rem">
-                    <button type="button" class="btn btn-s" style="width:100px">Hủy</button>
-                    <button type="submit" class="btn btn-p" style="padding:0 2rem"><i class="material-icons-round">save</i> Lưu </button>
+                <div style="flex: 0.5;">
+                    <label>Số lượng</label>
+                    <input type="number" name="sl_input" value="1" min="1" style="text-align:center">
                 </div>
-            </section>
-        </form>
+                <button type="submit" onclick="document.getElementById('action_type').value='add_product'" class="btn btn-add">THÊM</button>
+            </div>
+
+            <table>
+                <thead><tr><th>Mã SP</th><th>Tên sản phẩm</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th><th></th></tr></thead>
+                <tbody>
+                    <?php 
+                    $subtotal = 0;
+                    if(!empty($_SESSION['cart'])):
+                        foreach($_SESSION['cart'] as $idx => $item): 
+                            $tt = $item['soluong'] * $item['dongia'];
+                            $subtotal += $tt;
+                    ?>
+                    <tr>
+                        <td><?= $item['masanpham'] ?></td>
+                        <td><b><?= $item['tensanpham'] ?></b></td>
+                        <td><?= $item['soluong'] ?></td>
+                        <td><?= number_format($item['dongia']) ?></td>
+                        <td><?= number_format($tt) ?></td>
+                        <td><a href="?delete=<?= $idx ?>" style="color:red; text-decoration:none">✖</a></td>
+                    </tr>
+                    <?php endforeach; else: ?>
+                    <tr><td colspan="6" style="text-align:center; color:#ccc">Chưa có sản phẩm nào</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+
+            <div class="total-area">
+                <p>Tạm tính: <b><?= number_format($subtotal) ?> VNĐ</b></p>
+                <?php 
+                    $discount = 0;
+                    if ($old_km == 'KM01') {
+                        $discount = $subtotal * 0.1;
+                        echo "<p class='discount-text'>Giảm giá (KM01 - 10%): -".number_format($discount)." VNĐ</p>";
+                    }
+                    $grand_total = $subtotal - $discount;
+                ?>
+                <h2 style="color:var(--primary); margin: 5px 0;">Tổng: <?= number_format($grand_total) ?> VNĐ</h2>
+                <input type="hidden" name="tongtien_sau_km" value="<?= $grand_total ?>">
+            </div>
+        </div>
     </div>
-</body>
+</form>
 
+</body>
 </html>
