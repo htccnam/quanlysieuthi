@@ -44,17 +44,15 @@
                 </li>
                 
 
-                <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">👥 Khách hàng</a></li>
+                
                 <!--Khách hàng-->
-                <li class="nav-item dropdown">
-                 <a class="nav-link dropdown-toggle" href="#" id="navKhachHang" role="button" data-bs-toggle="dropdown">
-                   Khách hàng
-                 </a>
-                  <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="">Danh sách khách hàng</a></li>
-                     <li><a class="dropdown-item" href="">Lịch sử mua hàng</a></li>
-                   </ul>
-                 </li>
+                <li><a href="#">👥 Khách Hàng ▼</a>
+                    <ul>
+                        <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">Quản Lý Khách Hàng</a></li>
+                        <li><a href="khachhang/xephangthanhvien.php" target="contentFrame">Xếp Hạng Thành Viên</a></li>
+                        <li><a href="/" target="contentFrame">Quy Đổi Điểm</a></li>
+                    </ul>
+                </li>
 
                 <li><a href="khuyenmai/quanlykhuyenmai.php" target="contentFrame">📰 Khuyến mại</a></li>
 
