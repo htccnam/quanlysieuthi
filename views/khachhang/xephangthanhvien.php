@@ -1,42 +1,46 @@
 <?php
-// --- PHẦN 1: LOGIC PHP  ---
+
 require_once '../connectdb.php';
 if (isset($con)) $conn = $con;
 
 $rank_rules = [
-    'Đồng' => ['point' => 100, 'benefit' => '<i class="fa-solid fa-tag"></i> Giảm <b>5%</b> tổng bill<br><i class="fa-solid fa-gift"></i> Quà gia nhập'],
-    'Bạc' => ['point' => 500, 'benefit' => '<i class="fa-solid fa-tag"></i> Giảm <b>15%</b> tổng bill<br><i class="fa-solid fa-cake-candles"></i> Quà sinh nhật 200k'],
-    'Vàng' => ['point' => 1000, 'benefit' => '<i class="fa-solid fa-tag"></i> Giảm <b>20%</b> tổng bill<br><i class="fa-solid fa-truck-fast"></i> Free ship<br><i class="fa-solid fa-wine-glass"></i> Quà tết'],
-    'Kim Cương' => ['point' => 5000, 'benefit' => '<i class="fa-solid fa-tag"></i> Giảm <b>30%</b> trọn đời<br><i class="fa-solid fa-crown"></i> Quà độc quyền 5tr<br><i class="fa-solid fa-headset"></i> Chăm sóc 24/7']
+    'Đồng' => ['point' => 100, 'benefit' => '<i class="fa-solid fa-gift"></i> Quà gia nhập'],
+    'Bạc' => ['point' => 500, 'benefit' => '<i class="fa-solid fa-cake-candles"></i> Quà sinh nhật 200k'],
+    'Vàng' => ['point' => 1000, 'benefit' => '<i class="fa-solid fa-truck-fast"></i> Free ship<br><i class="fa-solid fa-wine-glass"></i> Quà tết'],
+    'Kim Cương' => ['point' => 5000, 'benefit' => '<i class="fa-solid fa-crown"></i> Quà độc quyền 5tr<br><i class="fa-solid fa-headset"></i> Chăm sóc 24/7']
 ];
 
 $message = ""; $msg_type = "";
 
-
 if (isset($_POST['btn_update_rank'])) {
-    $id_khach = $_POST['customer_id'];
+    $code_khach = $_POST['customer_code']; 
     $rank_moi = $_POST['rank_level'];
-    if (empty($id_khach) || empty($rank_moi)) { $message = "Thiếu thông tin!"; $msg_type = "error"; } 
-    else {
-        $q = mysqli_query($conn, "SELECT diemtichluy, tenkhachhang FROM khachhang WHERE id = $id_khach");
+    
+    if (empty($code_khach) || empty($rank_moi)) { 
+        $message = "Thiếu thông tin!"; $msg_type = "error"; 
+    } else {
+        $q = mysqli_query($conn, "SELECT diemtichluy, tenkhachhang FROM khachhang WHERE makhachhang = '$code_khach'");
         $c_data = mysqli_fetch_assoc($q);
+        
         $curr = intval($c_data['diemtichluy']);
         $req = $rank_rules[$rank_moi]['point'];
         
-        if ($curr < $req) { $message = "Chưa đủ điểm ($curr < $req)."; $msg_type = "error"; } 
-        else {
-            if (mysqli_query($conn, "UPDATE khachhang SET hangthanhvien = '$rank_moi' WHERE id = $id_khach")) {
-                $message = "Thăng hạng thành công!"; $msg_type = "success";
-            } else { $message = "Lỗi SQL"; $msg_type = "error"; }
+        if ($curr < $req) { 
+            $message = "Khách <b>{$c_data['tenkhachhang']}</b> chưa đủ điểm ($curr < $req)."; $msg_type = "error"; 
+        } else {
+            if (mysqli_query($conn, "UPDATE khachhang SET hangthanhvien = '$rank_moi' WHERE makhachhang = '$code_khach'")) {
+                $message = "Thăng hạng thành công cho mã <b>$code_khach</b>!"; $msg_type = "success";
+            } else { 
+                $message = "Lỗi SQL: " . mysqli_error($conn); $msg_type = "error"; 
+            }
         }
     }
 }
 
-
 if (isset($_GET['action']) && $_GET['action'] == 'reset') {
-    $id = $_GET['id'];
-    mysqli_query($conn, "UPDATE khachhang SET hangthanhvien = 'Chưa xếp hạng' WHERE id = $id");
-    $message = "Đã hủy hạng!"; $msg_type = "success";
+    $code = $_GET['code'];
+    mysqli_query($conn, "UPDATE khachhang SET hangthanhvien = 'Chưa xếp hạng' WHERE makhachhang = '$code'");
+    $message = "Đã hủy hạng cho mã $code!"; $msg_type = "success";
 }
 
 $list_customers = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY diemtichluy DESC");
@@ -51,7 +55,7 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -61,14 +65,16 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
         <div><a href="quanlykhachhang.php" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Về Quản Lý KH</a></div>
     </div>
 
-    <div class="container">
-        <!-- CỘT TRÁI -->
+
+    <div class="container grid-layout">
+
+
         <div>
             <div class="rule-box">
                 <h3 style="color: var(--primary-color); margin-top: 0; font-size: 18px;"><i class="fa-solid fa-sitemap"></i> Tác Vụ</h3>
                 <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Chọn chức năng thực hiện.</p>
                 <button onclick="openModal('rankModal')" class="btn btn-primary" style="width: 100%; margin-bottom: 10px;"><i class="fa-solid fa-trophy"></i> Xét Duyệt Hạng</button>
-                <button onclick="openModal('benefitModal')" class="btn btn-secondary" style="width: 100%; background-color: var(--secondary-color);"><i class="fa-solid fa-list-check"></i> Tra Cứu Quyền Lợi</button>
+                <button onclick="openModal('benefitModal')" class="btn btn-secondary" style="width: 100%; background-color: #17a2b8;"><i class="fa-solid fa-list-check"></i> Tra Cứu Quyền Lợi</button>
             </div>
             
             <div style="margin-top: 20px;">
@@ -82,7 +88,7 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
             </div>
         </div>
 
-        <!-- CỘT PHẢI -->
+
         <div class="card">
             <div class="card-header"><span><i class="fa-solid fa-users-viewfinder"></i> Danh Sách Thành Viên</span></div>
             <div class="card-body">
@@ -106,7 +112,7 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
                                 <td><span class="badge-rank <?php echo $rc; ?>"><?php echo ($r)?$r:'Chưa xếp hạng'; ?></span></td>
                                 <td>
                                     <?php if($r && $r!='Chưa xếp hạng'): ?>
-                                    <a href="xephangthanhvien.php?action=reset&id=<?php echo $row['id']; ?>" onclick="return confirm('Hủy hạng?');" class="btn-action-delete"><i class="fa-solid fa-user-slash"></i> Hủy</a>
+                                    <a href="xephangthanhvien.php?action=reset&code=<?php echo $row['makhachhang']; ?>" onclick="return confirm('Hủy hạng?');" class="btn-action-delete"><i class="fa-solid fa-user-slash"></i> Hủy</a>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -118,7 +124,7 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
         </div>
     </div>
 
-    <!-- MODAL 1: XÉT DUYỆT -->
+    <!-- MODAL 1 -->
     <div id="rankModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -138,10 +144,12 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
                     </div>
                     <div class="form-group">
                         <label class="form-label">Khách Hàng <span style="color:red">*</span></label>
-                        <select name="customer_id" id="customerSelect" class="form-control" onchange="checkCondition()" required>
+                        <select name="customer_code" id="customerSelect" class="form-control" onchange="checkCondition()" required>
                             <option value="">-- Chọn khách hàng --</option>
                             <?php while ($kh = mysqli_fetch_assoc($list_for_modal)): ?>
-                                <option value="<?php echo $kh['id']; ?>" data-current="<?php echo $kh['diemtichluy']; ?>"><?php echo $kh['tenkhachhang']; ?> (Có <?php echo number_format($kh['diemtichluy']); ?> điểm)</option>
+                                <option value="<?php echo $kh['makhachhang']; ?>" data-current="<?php echo $kh['diemtichluy']; ?>">
+                                    <?php echo $kh['tenkhachhang']; ?> (Có <?php echo number_format($kh['diemtichluy']); ?> điểm)
+                                </option>
                             <?php endwhile; ?>
                         </select>
                     </div>
@@ -155,10 +163,10 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
         </div>
     </div>
 
-    <!-- MODAL 2: TRA CỨU -->
+
     <div id="benefitModal" class="modal">
         <div class="modal-content modal-lg">
-            <div class="modal-header" style="background-color: var(--secondary-color);">
+            <div class="modal-header" style="background-color: #17a2b8;">
                 <span style="font-weight: bold;"><i class="fa-solid fa-list-check"></i> Bảng Quy Đổi Điểm & Quyền Lợi</span>
                 <span class="close-modal-btn" onclick="closeModal('benefitModal')">&times;</span>
             </div>
@@ -197,7 +205,7 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
             m.style.display = "block";
 
             if (curr >= req) {
-                m.innerHTML = "<i class='fa-solid fa-check-circle'></i> Đủ điều kiện!"; m.className = "check-message msg-ok"; b.disabled = false;
+                m.innerHTML = "<i class='fa-solid fa-check-circle'></i> Đủ điều kiện thăng hạng!"; m.className = "check-message msg-ok"; b.disabled = false;
             } else {
                 m.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Thiếu " + (req - curr) + " điểm"; m.className = "check-message msg-fail"; b.disabled = true;
             }
