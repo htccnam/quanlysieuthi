@@ -1,5 +1,5 @@
 <?php
-// --- PHẦN 1: LOGIC PHP  ---
+
 require_once '../connectdb.php'; 
 if (isset($con)) {
     $conn = $con;
@@ -11,9 +11,8 @@ $message = "";
 $msg_type = "";
 $edit_customer = null;
 
-
 if (isset($_POST['btn_save'])) {
-    $makh = $_POST['makhachhang'];
+    $makh = $_POST['makhachhang']; 
     $tenkh = $_POST['tenkhachhang'];
     $gioitinh = $_POST['gioitinh'];
     $ngaysinh = $_POST['ngaysinh'];
@@ -21,33 +20,47 @@ if (isset($_POST['btn_save'])) {
     $sdt = $_POST['sdt'];
     $diachi = $_POST['diachi'];
     
-    if (isset($_POST['id']) && !empty($_POST['id'])) {
-        $id = $_POST['id'];
-        $sql = "UPDATE khachhang SET makhachhang='$makh', tenkhachhang='$tenkh', gioitinh='$gioitinh', ngaysinh='$ngaysinh', email='$email', sdt ='$sdt', diachi='$diachi' WHERE id = $id";
-        if (mysqli_query($conn, $sql)) { $message = "Cập nhật thành công!"; $msg_type = "success"; } 
-        else { $message = "Lỗi: " . mysqli_error($conn); $msg_type = "error"; }
+    if (isset($_POST['old_makh']) && !empty($_POST['old_makh'])) {
+        $old_makh = $_POST['old_makh'];
+        $sql = "UPDATE khachhang SET 
+                tenkhachhang='$tenkh', gioitinh='$gioitinh', ngaysinh='$ngaysinh',
+                email='$email', sdt ='$sdt', diachi='$diachi' 
+                WHERE makhachhang = '$old_makh'";
+                
+        if (mysqli_query($conn, $sql)) { 
+            $message = "Cập nhật thành công!"; $msg_type = "success"; 
+        } else { 
+            $message = "Lỗi: " . mysqli_error($conn); $msg_type = "error"; 
+        }
     } else {
         $check = mysqli_query($conn, "SELECT * FROM khachhang WHERE makhachhang='$makh'");
-        if (mysqli_num_rows($check) > 0) { $message = "Mã KH đã tồn tại!"; $msg_type = "error"; } 
-        else {
-            $sql = "INSERT INTO khachhang (makhachhang, tenkhachhang, gioitinh, ngaysinh, diachi, email,sdt, diemtichluy) VALUES ('$makh', '$tenkh', '$gioitinh', '$ngaysinh', '$diachi', '$email','$sdt', 0)";
-            if (mysqli_query($conn, $sql)) { $message = "Thêm mới thành công!"; $msg_type = "success"; } 
-            else { $message = "Lỗi: " . mysqli_error($conn); $msg_type = "error"; }
+        if (mysqli_num_rows($check) > 0) { 
+            $message = "Mã KH '$makh' đã tồn tại!"; $msg_type = "error"; 
+        } else {
+            $sql = "INSERT INTO khachhang (makhachhang, tenkhachhang, gioitinh, ngaysinh, diachi, email, sdt, diemtichluy, diemhientai) 
+                    VALUES ('$makh', '$tenkh', '$gioitinh', '$ngaysinh', '$diachi', '$email', '$sdt', 0, 0)";
+            if (mysqli_query($conn, $sql)) { 
+                $message = "Thêm mới thành công!"; $msg_type = "success"; 
+            } else { 
+                $message = "Lỗi: " . mysqli_error($conn); $msg_type = "error"; 
+            }
         }
     }
 }
 
 
-if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "DELETE FROM khachhang WHERE id = $id";
-    if (mysqli_query($conn, $sql)) { $message = "Đã xóa khách hàng!"; $msg_type = "success"; }
+if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['code'])) {
+    $code = $_GET['code'];
+    $sql = "DELETE FROM khachhang WHERE makhachhang = '$code'";
+    if (mysqli_query($conn, $sql)) { 
+        $message = "Đã xóa khách hàng có mã $code!"; $msg_type = "success"; 
+    }
 }
 
 
-if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $result = mysqli_query($conn, "SELECT * FROM khachhang WHERE id = $id");
+if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($_GET['code'])) {
+    $code = $_GET['code'];
+    $result = mysqli_query($conn, "SELECT * FROM khachhang WHERE makhachhang = '$code'");
     $edit_customer = mysqli_fetch_assoc($result);
 }
 
@@ -58,7 +71,7 @@ if (isset($_GET['tukhoa']) && !empty($_GET['tukhoa'])) {
     $keyword = $_GET['tukhoa'];
     $sql_list .= " WHERE makhachhang LIKE '%$keyword%' OR tenkhachhang LIKE '%$keyword%'";
 }
-$sql_list .= " ORDER BY id DESC";
+$sql_list .= " ORDER BY makhachhang ASC"; 
 $list_customers = mysqli_query($conn, $sql_list);
 ?>
 
@@ -66,39 +79,41 @@ $list_customers = mysqli_query($conn, $sql_list);
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Khách Hàng</title>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <!-- LINK TỚI FILE CSS RIÊNG -->
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="navbar">
-        <div class="navbar-brand"><i class="fa-solid fa-cart-shopping"></i>Quản lý Khách Hàng</div>
-        <div style="font-size: 14px; color: #666;">Xin chào, <b>Admin</b> | <a href="#" style="color: var(--primary-color);">Đăng xuất</a></div>
+        <div class="navbar-brand"><i class="fa-solid fa-cart-shopping"></i> Quản lý Khách Hàng</div>
+        <div style="font-size: 14px; color: #666;"> <a href="#" style="color: var(--primary-color);"></a></div>
     </div>
 
-    <div class="container">
-        <!-- FORM -->
+
+    <div class="container block-layout">
+
         <div class="card">
             <div class="card-header">
                 <span><i class="fa-solid <?php echo ($edit_customer) ? 'fa-pen-to-square' : 'fa-user-plus'; ?>"></i> <?php echo ($edit_customer) ? "Cập Nhật" : "Thêm Mới"; ?></span>
             </div>
             <div class="card-body">
                 <form action="quanlykhachhang.php" method="POST">
-                    <input type="hidden" name="id" value="<?php echo ($edit_customer) ? $edit_customer['id'] : ''; ?>">
+                    <input type="hidden" name="old_makh" value="<?php echo ($edit_customer) ? $edit_customer['makhachhang'] : ''; ?>">
                     
                     <div class="form-group">
                         <label class="form-label">Mã KH <span style="color:red">*</span></label>
-                        <input type="text" name="makhachhang" class="form-control" required placeholder="VD: KH001" value="<?php echo ($edit_customer) ? $edit_customer['makhachhang'] : ''; ?>">
+                        <input type="text" name="makhachhang" class="form-control" required placeholder="VD: KH001" 
+                               value="<?php echo ($edit_customer) ? $edit_customer['makhachhang'] : ''; ?>"
+                               <?php echo ($edit_customer) ? 'readonly' : ''; ?>>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Họ Tên <span style="color:red">*</span></label>
-                        <input type="text" name="tenkhachhang" class="form-control" required value="<?php echo ($edit_customer) ? $edit_customer['tenkhachhang'] : ''; ?>">
+                        <input type="text" name="tenkhachhang" class="form-control" required 
+                               value="<?php echo ($edit_customer) ? $edit_customer['tenkhachhang'] : ''; ?>">
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="form-group">
@@ -132,14 +147,14 @@ $list_customers = mysqli_query($conn, $sql_list);
                             <i class="fa-solid fa-floppy-disk"></i> <?php echo ($edit_customer) ? "Lưu Thay Đổi" : "Lưu Thông Tin"; ?>
                         </button>
                         <?php if($edit_customer): ?>
-                            <a href="quanlykhachhang.php" class="btn btn-secondary" style="margin-top: 10px; width: 100%;"><i class="fa-solid fa-ban"></i> Hủy Bỏ</a>
+                            <a href="quanlykhachhang.php" class="btn btn-secondary" style="margin-top: 10px; width: 100%; box-sizing: border-box;"><i class="fa-solid fa-ban"></i> Hủy Bỏ</a>
                         <?php endif; ?>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- LIST -->
+
         <div class="card">
             <div class="card-header">
                 <span><i class="fa-solid fa-list"></i> Danh Sách Khách Hàng</span>
@@ -184,8 +199,8 @@ $list_customers = mysqli_query($conn, $sql_list);
                                     </td>
                                     <td><span class="badge badge-points"><?php echo number_format($row['diemtichluy']); ?></span></td>
                                     <td style="text-align: right;">
-                                        <a href="quanlykhachhang.php?action=edit&id=<?php echo $row['id']; ?>" class="btn-action-edit"><i class="fa-solid fa-pen"></i></a>
-                                        <a href="quanlykhachhang.php?action=delete&id=<?php echo $row['id']; ?>" onclick="return confirm('Xóa?');" class="btn-action-delete"><i class="fa-solid fa-trash"></i></a>
+                                        <a href="quanlykhachhang.php?action=edit&code=<?php echo $row['makhachhang']; ?>" class="btn-action-edit"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="quanlykhachhang.php?action=delete&code=<?php echo $row['makhachhang']; ?>" onclick="return confirm('Xóa khách hàng <?php echo $row['makhachhang']; ?>?');" class="btn-action-delete"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 <?php endwhile; ?>

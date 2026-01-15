@@ -53,7 +53,7 @@ include("check_dangnhap.php");
                     <ul>
                         <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">Quản Lý Khách Hàng</a></li>
                         <li><a href="khachhang/xephangthanhvien.php" target="contentFrame">Xếp Hạng Thành Viên</a></li>
-                        <li><a href="/" target="contentFrame">Quy Đổi Điểm</a></li>
+                        <li><a href="khachhang/quydoidiem.php" target="contentFrame">Quy Đổi Điểm</a></li>
                     </ul>
                 </li>
 

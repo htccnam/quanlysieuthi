@@ -103,6 +103,20 @@ if (isset($_POST['btn_save_order'])) {
                     $sql_update_kho = "UPDATE sanpham SET soluong = soluong - $sl WHERE masanpham = '$ma'";
                     $con->query($sql_update_kho);
                 }
+                // tính điểm tích lũy
+                if (!empty($old_kh)) {
+                
+                    $diem_tich_luy_them = floor($final_total / 10000); 
+                    $diem_hien_tai_them = floor($final_total / 1000);
+
+        
+                    $sql_update_diem = "UPDATE khachhang 
+                                        SET diemtichluy = diemtichluy + $diem_tich_luy_them,
+                                            diemhientai = diemhientai + $diem_hien_tai_them
+                                        WHERE makhachhang = '$old_kh'";
+                    
+                    $con->query($sql_update_diem);
+                }
 
                 unset($_SESSION['cart']);
                 unset($_SESSION['old_data']);
