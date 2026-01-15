@@ -79,6 +79,20 @@ if (isset($_POST['action']) && $_POST['action'] == 'save_order') {
 
                     $con->query($sql);
                 }
+                // tính điểm tích lũy
+                if (!empty($old_kh)) {
+                
+                    $diem_tich_luy_them = floor($final_total / 10000); 
+                    $diem_hien_tai_them = floor($final_total / 1000);
+
+        
+                    $sql_update_diem = "UPDATE khachhang 
+                                        SET diemtichluy = diemtichluy + $diem_tich_luy_them,
+                                            diemhientai = diemhientai + $diem_hien_tai_them
+                                        WHERE makhachhang = '$old_kh'";
+                    
+                    $con->query($sql_update_diem);
+                }
 
                 unset($_SESSION['cart']);
                 echo "<script>alert('Lưu đơn hàng thành công!'); window.location.href='thong_tin.php';</script>";
