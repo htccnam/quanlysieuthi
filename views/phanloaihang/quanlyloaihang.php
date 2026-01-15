@@ -17,12 +17,24 @@ if (isset($_POST['btnThem'])) {
         }
     }
 }
+    if (isset($_GET['btnXoa'])) {
+        $maXoa = $_GET['maloai']; 
+        $checkSP = mysqli_query($con, "SELECT * FROM sanpham WHERE maloai = '$maXoa'");
 
-if (isset($_GET['btnXoa'])) {
-    $maXoa = $_GET['maloai'];
-    mysqli_query($con, "DELETE FROM loaihang WHERE maloai = '$maXoa'");
-    echo "<script>alert('Xóa thành công'); window.location='quanlyloaihang.php';</script>";
-}
+        if (mysqli_num_rows($checkSP) > 0) {
+            echo "<script>
+                alert('Cảnh báo: Loại hàng này đang có sản phẩm. Bạn phải xóa sản phẩm trước!');
+                window.location='quanlyloaihang.php';
+            </script>";
+        } else {
+            $sqlDelete = "DELETE FROM loaihang WHERE maloai = '$maXoa'";
+            if(mysqli_query($con, $sqlDelete)){
+                echo "<script>alert('Xóa thành công'); window.location='quanlyloaihang.php';</script>";
+            } else {
+                echo "<script>alert('Lỗi xóa: ".mysqli_error($con)."');</script>";
+            }
+        }
+    }
 
 $txtTimKiem = "";
 if (isset($_POST['btnTimKiem'])) {
