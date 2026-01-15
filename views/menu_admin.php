@@ -1,3 +1,6 @@
+<?php 
+include("check_dangnhap.php");
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -64,10 +67,10 @@
                 </li>
 
                 <li>
-                    <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='login.php';}"
+                    <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='logout.php';}"
                         style="color: #ff6b6b; font-weight: bold;">
                         Đăng xuất ➜
-                    </button>
+                    </button>   
                 </li>
             </ul>
         </header>
