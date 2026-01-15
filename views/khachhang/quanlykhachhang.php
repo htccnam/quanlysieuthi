@@ -1,5 +1,5 @@
 <?php
-// --- PHẦN 1: LOGIC PHP ---
+
 require_once '../connectdb.php'; 
 if (isset($con)) {
     $conn = $con;
