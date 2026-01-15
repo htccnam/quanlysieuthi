@@ -1,5 +1,5 @@
 <?php
-// --- PHẦN 1: LOGIC PHP (Giữ nguyên) ---
+// --- PHẦN 1: LOGIC PHP  ---
 require_once '../connectdb.php'; 
 if (isset($con)) {
     $conn = $con;
@@ -11,7 +11,7 @@ $message = "";
 $msg_type = "";
 $edit_customer = null;
 
-// Xử lý Lưu (Thêm/Sửa)
+
 if (isset($_POST['btn_save'])) {
     $makh = $_POST['makhachhang'];
     $tenkh = $_POST['tenkhachhang'];
@@ -37,21 +37,21 @@ if (isset($_POST['btn_save'])) {
     }
 }
 
-// Xử lý Xóa
+
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $id = $_GET['id'];
     $sql = "DELETE FROM khachhang WHERE id = $id";
     if (mysqli_query($conn, $sql)) { $message = "Đã xóa khách hàng!"; $msg_type = "success"; }
 }
 
-// Xử lý Sửa
+
 if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($_GET['id'])) {
     $id = $_GET['id'];
     $result = mysqli_query($conn, "SELECT * FROM khachhang WHERE id = $id");
     $edit_customer = mysqli_fetch_assoc($result);
 }
 
-// Lấy danh sách
+
 $keyword = "";
 $sql_list = "SELECT * FROM khachhang";
 if (isset($_GET['tukhoa']) && !empty($_GET['tukhoa'])) {
@@ -68,7 +68,7 @@ $list_customers = mysqli_query($conn, $sql_list);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Khách Hàng</title>
-    <!-- Font Awesome & Google Fonts -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
@@ -78,7 +78,7 @@ $list_customers = mysqli_query($conn, $sql_list);
 <body>
 
     <div class="navbar">
-        <div class="navbar-brand"><i class="fa-solid fa-cart-shopping"></i> Hệ Thống Bán Lẻ</div>
+        <div class="navbar-brand"><i class="fa-solid fa-cart-shopping"></i>Quản lý Khách Hàng</div>
         <div style="font-size: 14px; color: #666;">Xin chào, <b>Admin</b> | <a href="#" style="color: var(--primary-color);">Đăng xuất</a></div>
     </div>
 
@@ -113,7 +113,7 @@ $list_customers = mysqli_query($conn, $sql_list);
                             <input type="date" name="ngaysinh" class="form-control" value="<?php echo ($edit_customer) ? $edit_customer['ngaysinh'] : ''; ?>">
                         </div>
                     </div>
-                    <!-- Các input khác tương tự -->
+                    
                     <div class="form-group">
                         <label class="form-label">SĐT</label>
                         <input type="number" name="sdt" class="form-control" value="<?php echo ($edit_customer) ? $edit_customer['sdt'] : ''; ?>">

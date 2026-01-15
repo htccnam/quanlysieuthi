@@ -1,5 +1,5 @@
 <?php
-// --- PHẦN 1: LOGIC PHP (Giữ nguyên) ---
+// --- PHẦN 1: LOGIC PHP  ---
 require_once '../connectdb.php';
 if (isset($con)) $conn = $con;
 
@@ -12,7 +12,7 @@ $rank_rules = [
 
 $message = ""; $msg_type = "";
 
-// Cập nhật hạng
+
 if (isset($_POST['btn_update_rank'])) {
     $id_khach = $_POST['customer_id'];
     $rank_moi = $_POST['rank_level'];
@@ -32,7 +32,7 @@ if (isset($_POST['btn_update_rank'])) {
     }
 }
 
-// Hủy hạng
+
 if (isset($_GET['action']) && $_GET['action'] == 'reset') {
     $id = $_GET['id'];
     mysqli_query($conn, "UPDATE khachhang SET hangthanhvien = 'Chưa xếp hạng' WHERE id = $id");
@@ -51,7 +51,7 @@ $list_for_modal = mysqli_query($conn, "SELECT * FROM khachhang ORDER BY tenkhach
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <!-- LINK TỚI FILE CSS RIÊNG -->
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

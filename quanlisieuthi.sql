@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS khachhang (
     email VARCHAR(100),
     sdt INT,
     diemtichluy INT DEFAULT 0
-
+    hangthanhvien VARCHAR(50) DEFAULT "Chưa xếp hạng"
 );
 
 
@@ -137,7 +137,8 @@ INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, g
 -- 5. Khách hàng
 INSERT INTO khachhang (makhachhang, tenkhachhang, gioitinh, ngaysinh, diachi, email, sdt, diemtichluy) VALUES 
 ('KH001', 'Nguyễn Đình Chiểu', 'Nam', '1990-01-01', 'Hà Nội', 'nguyendinhchieu@gmail.com',02312631, 100),
-('KH002', 'Đặng Trần Tùng', 'Nam', '1995-05-20', 'Đà Nẵng', 'trantung@gmail.com',123557, 50);
+('KH002', 'Đặng Trần Tùng', 'Nam', '1995-05-20', 'Đà Nẵng', 'trantung@gmail.com',123557, 50).
+('KH003','Lê Tuấn Kiệt','Nam', '2005-06-09', 'Lạng Sơn', 'ltk@gmail.com', 091326688, 6000);
 
 -- 6. Tin tức
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES
