@@ -38,15 +38,15 @@ $row = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <title>Suakhuyenmai</title>
-    <link rel="stylesheet" href="../../css/themsuaxoatimkiem.css">
+    <link rel="stylesheet" href="../../css/dinhdang1.css">
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="" method="post" class="formnhap" style="width: 600px ; height: auto; margin: 50px auto;">
         <h1>Sửa khuyến mãi</h1>
 
         <label>Mã khuyến mãi</label>
-        <input type="text" name="txtMaKhuyenMai" value="<?php echo $row['makhuyenmai'] ?>" readonly>
+        <input type="text" name="txtMaKhuyenMai" value="<?php echo $row['makhuyenmai'] ?>" class="highlight" readonly>
 
         <label>Tên khuyến mãi</label>
         <input type="text" name="txtTenKhuyenMai" value="<?php echo $row['tenkhuyenmai'] ?>" required>
@@ -60,8 +60,14 @@ $row = mysqli_fetch_assoc($result);
         <label>Ngày tạo</label>
         <input type="date" name="txtNgayTao" value="<?php echo $row['ngaytao'] ?>" required>
 
-        <button name="btnSua" onclick="return confirm('Xác nhận sửa?')">Sửa</button>
-        <button name="btnThoat" onclick="return confirm('Thoát không lưu?')">Thoát</button>
+        <div class="hang">
+            <div class="cot"><button name="btnSua" class="buttonThem" style="width: 50%;"
+                    onclick="return confirm('Xác nhận sửa?')">Sửa</button></div>
+            <div class="cot"><button name="btnThoat" class="buttonTimKiem" style="width: 50%;"
+                    onclick="return confirm('Thoát không lưu?')">Thoát</button></div>
+        </div>
+
+
     </form>
 </body>
 

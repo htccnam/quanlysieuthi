@@ -1,3 +1,6 @@
+<?php 
+include("check_dangnhap.php");
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -38,23 +41,21 @@
 
                 <li><a href="logo.php" target="contentFrame">🛒 Bán hàng ▼</a>
                     <ul>
-                        <li><a href="ban_hang/them_don.php" target="contentFrame">Tạo đơn mới</a></li>
-                        <li><a href="ban_hang/chi_tiet.php" target="contentFrame">Chi tiết đơn hàng</a></li>
+                        <li><a href="ban_hang/tao_don.php" target="contentFrame">Tạo đơn mới</a></li>
+                        <li><a href="ban_hang/thong_tin.php" target="contentFrame">Chi tiết đơn hàng</a></li>
                     </ul>
                 </li>
                 
 
-                <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">👥 Khách hàng</a></li>
+                
                 <!--Khách hàng-->
-                <li class="nav-item dropdown">
-                 <a class="nav-link dropdown-toggle" href="#" id="navKhachHang" role="button" data-bs-toggle="dropdown">
-                   Khách hàng
-                 </a>
-                  <ul class="dropdown-menu">
-                     <li><a class="dropdown-item" href="">Danh sách khách hàng</a></li>
-                     <li><a class="dropdown-item" href="">Lịch sử mua hàng</a></li>
-                   </ul>
-                 </li>
+                <li><a href="#">👥 Khách Hàng ▼</a>
+                    <ul>
+                        <li><a href="khachhang/quanlykhachhang.php" target="contentFrame">Quản Lý Khách Hàng</a></li>
+                        <li><a href="khachhang/xephangthanhvien.php" target="contentFrame">Xếp Hạng Thành Viên</a></li>
+                        <li><a href="/" target="contentFrame">Quy Đổi Điểm</a></li>
+                    </ul>
+                </li>
 
                 <li><a href="khuyenmai/quanlykhuyenmai.php" target="contentFrame">📰 Khuyến mại</a></li>
 
@@ -66,10 +67,10 @@
                 </li>
 
                 <li>
-                    <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='login.php';}"
+                    <button onclick="if(confirm('Bạn có chắc muốn đăng xuất?')){window.location='logout.php';}"
                         style="color: #ff6b6b; font-weight: bold;">
                         Đăng xuất ➜
-                    </button>
+                    </button>   
                 </li>
             </ul>
         </header>
