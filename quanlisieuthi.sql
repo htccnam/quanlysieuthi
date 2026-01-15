@@ -25,15 +25,19 @@ CREATE TABLE nhanvien (
 );
 
 -- 4. TẠO BẢNG KHÁCH HÀNG
-CREATE TABLE khach_hang (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    ma_kh VARCHAR(20) NOT NULL UNIQUE,
-    ho_ten VARCHAR(100) NOT NULL,
-    dia_chi TEXT,
-    sdt VARCHAR(15) NOT NULL UNIQUE,
-    email VARCHAR(100) UNIQUE,
-    ngay_tao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE IF NOT EXISTS khachhang (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+    makhachhang VARCHAR(20) NOT NULL,
+    tenkhachhang VARCHAR(100) NOT NULL,
+    gioitinh VARCHAR(10),
+    ngaysinh DATE,
+    diachi VARCHAR(255),
+    email VARCHAR(100),
+    sdt INT,
+    diemtichluy INT DEFAULT 0
+    hangthanhvien VARCHAR(50) DEFAULT "Chưa xếp hạng"
 );
+
 
 -- 5. TẠO BẢNG LOẠI HÀNG (Danh mục)
 CREATE TABLE loaihang (
@@ -131,9 +135,10 @@ INSERT INTO sanpham (masanpham, tensanpham, maloaihang, mathuonghieu, soluong, g
 ('SP03', 'Chảo chống dính', 'LH03', 'TH03', 50, 150000, 220000, 'Cái');
 
 -- 5. Khách hàng
-INSERT INTO khachhang (makhachhang, tenkhachhang, sodienthoai, diachi, diemtichluy,taikhoan,matkhau) VALUES 
-('KH01', 'Trần Thị B', '0987654321', 'Hà Nội', 10,'admin','admin'),
-('KH02', 'Lê Văn C', '0345678910', 'Đà Nẵng', 50,'admin','admin');
+INSERT INTO khachhang (makhachhang, tenkhachhang, gioitinh, ngaysinh, diachi, email, sdt, diemtichluy) VALUES 
+('KH001', 'Nguyễn Đình Chiểu', 'Nam', '1990-01-01', 'Hà Nội', 'nguyendinhchieu@gmail.com',02312631, 100),
+('KH002', 'Đặng Trần Tùng', 'Nam', '1995-05-20', 'Đà Nẵng', 'trantung@gmail.com',123557, 50).
+('KH003','Lê Tuấn Kiệt','Nam', '2005-06-09', 'Lạng Sơn', 'ltk@gmail.com', 091326688, 6000);
 
 -- 6. Tin tức
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES
