@@ -34,8 +34,9 @@ CREATE TABLE IF NOT EXISTS khachhang (
     diachi VARCHAR(255),
     email VARCHAR(100),
     sdt INT,
-    diemtichluy INT DEFAULT 0
-    hangthanhvien VARCHAR(50) DEFAULT "Chưa xếp hạng"
+    diemtichluy INT DEFAULT 0,
+    hangthanhvien VARCHAR(50) DEFAULT "Chưa xếp hạng",
+    diemhientai INT DEFAULT 0
 );
 
 
@@ -144,3 +145,9 @@ INSERT INTO khachhang (makhachhang, tenkhachhang, gioitinh, ngaysinh, diachi, em
 INSERT INTO tintuc (matintuc, tieude, manhanvien, noidung, loaitin, ngaydang) VALUES
 ('TT01', 'Thông báo nghỉ lễ 30/4', 'NV01', 'Nghỉ từ 30/4 đến 1/5', 'Thông báo', '2024-04-25'),
 ('TT02', 'Khuyến mãi tháng 5', 'NV01', 'Giảm giá 50% toàn bộ', 'Khuyến mãi', '2024-05-01');
+
+
+
+-- Phần Cập nhập thêm :
+-- Set điểm tích lũy  = điểm hiện tại 
+UPDATE khachhang SET diemhientai = diemtichluy;
