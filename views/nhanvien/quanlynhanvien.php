@@ -88,7 +88,7 @@ if (isset($_POST['txtCheckExport'])) {
             <div class="hang">
                 <div class="cot">
                     <label for="txtMaNhanVien">Mã nhân viên</label>
-                    <input type="text" name="txtMaNhanVien" placeholder="Nhập mã nhân viên" required>
+                    <input type="text" name="txtMaNhanVien" placeholder="Nhập mã nhân viên"  required>
                 </div>
 
                 <div class="cot">
@@ -121,7 +121,7 @@ if (isset($_POST['txtCheckExport'])) {
                 </div>
 
                 <div class="cot"> <label for="txtEmail">Email</label>
-                    <input type="text" name="txtEmail" placeholder="Nhập email">
+                    <input type="email" name="txtEmail" placeholder="Nhập email">
                 </div>
 
 
@@ -155,7 +155,7 @@ if (isset($_POST['txtCheckExport'])) {
                         <input type="text" name="txtTimKiem" placeholder="vui lòng nhập mã hoặc tên để tìm kiếm">
                     </div>
                     <div class="cot">
-                        <button name="btnTimKiem" class="buttonThem">Tìm kiếm</button>
+                        <button name="btnTimKiem" class="buttonTimKiem">Tìm kiếm</button>
                     </div>
                 </div>
             </form>
@@ -166,7 +166,7 @@ if (isset($_POST['txtCheckExport'])) {
                         <input type="text" name="manhanvien" placeholder="nhập mã nhân viên để xuất">
                     </div>
                     <div class="cot">
-                        <button type="submit" class="buttonThem">Xuất Excel</button>
+                        <button type="submit" class="buttonKhac">Xuất Excel</button>
                     </div>
                 </div>
             </form>
@@ -200,7 +200,8 @@ if (isset($_POST['txtCheckExport'])) {
                             echo "<td>" . $row['machucvu'] . "</td>";
 
                             echo "<td>";
-                            echo "<a href='suanhanvien.php?manhanvien=" . $row['manhanvien'] . "' target = 'contentFrame' class='buttonSua'>sửa</a>";
+                            echo "<a href='suanhanvien.php?manhanvien=" . $row['manhanvien'] . "' target = 'contentFrame' class='buttonSua' title='Xóa'>sửa</a>";
+                            
                             echo "<a href='?btnXoa=1&manhanvien=" . $row['manhanvien'] . "' name='btnXoa' class='buttonXoa' onclick=\"return confirm('bạn có chắc chắn muốn xóa?')\">xóa</a>";
                             echo "</td>";
                             echo "</tr>";

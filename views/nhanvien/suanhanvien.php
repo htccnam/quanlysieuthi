@@ -42,15 +42,15 @@ $resultSelectChucVu = mysqli_execute_query($con, "select * from chucvu");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>suanhanvien</title>
-    <link rel="stylesheet" href="../../css/themsuaxoatimkiem.css">
+    <link rel="stylesheet" href="../../css/dinhdang1.css">
 </head>
 
 <body>
-    <form action="" method="POST" style="width: 500px; height: auto;">
+    <form action="" method="POST" style="width: 500px; height: auto; margin: 50px auto;" class="formnhap">
         <h1>quản lý nhân viên</h1>
         <br>
         <label for="txtMaNhanVien">Mã nhân viên</label>
-        <input type="text" name="txtMaNhanVien" class="hl" value="<?php echo $rowNhanVien['manhanvien'] ?>" readonly>
+        <input type="text" name="txtMaNhanVien" class="highlight"  value="<?php echo $rowNhanVien['manhanvien'] ?>"  readonly>
 
         <br>
         <label for="txtTenNhanVien">Tên nhân viên</label>
@@ -106,9 +106,16 @@ $resultSelectChucVu = mysqli_execute_query($con, "select * from chucvu");
             ?>
         </select>
         <br>
-        <button name="btnSua" onclick="return confirm('bạn có chắc chắn muốn sửa')">Sửa</button>
-        <button type="submit" name="btnThoat"
-            onclick="return confirm('mọi thao tác sẽ không được lưu lại')">Thoát</button>
+        <div class="hang">
+            <div class="cot">
+                <button name="btnSua" style="width: 60%;" onclick="return confirm('bạn có chắc chắn muốn sửa')"
+                    class="buttonThem">Sửa</button>
+            </div>
+            <div class="cot">
+                <button type="submit" style="width: 60%;" name="btnThoat" onclick="return confirm('mọi thao tác sẽ không được lưu lại')"
+                    class="buttonTimKiem">Thoát</button>
+            </div>
+        </div>
     </form>
 
 </body>

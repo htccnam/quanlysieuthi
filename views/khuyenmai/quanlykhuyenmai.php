@@ -74,7 +74,7 @@ $result = mysqli_execute_query($con, $sqlSelect);
         <div class="cot">
             <form action="" method="post" class="formnhap">
                 <input type="text" name="txtTimKiem" placeholder="Nhập mã hoặc tên để tìm kiếm">
-                <button name="btnTimKiem">🔍 Tìm kiếm</button>
+                <button name="btnTimKiem" class="buttonTimKiem">🔍 Tìm kiếm</button>
             </form>
             <H1>DANH SÁCH KHUYẾN MẠI</H1>
             <div class="thanhkeotable">
