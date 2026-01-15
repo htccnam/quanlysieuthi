@@ -19,7 +19,7 @@ if (isset($_POST['btnSua'])) {
 
 }
 
-if(isset($_POST['btnThoat'])){
+if (isset($_POST['btnThoat'])) {
     echo "<script> window.location='quanlychucvu.php' </script>";
 }
 
@@ -34,24 +34,35 @@ $row = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/themsuaxoatimkiem.css">
+    <link rel="stylesheet" href="../../css/dinhdang1.css">
     <title>Suachucvu</title>
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="" method="post" class="formnhap" style="width: 500px; height: 400px; margin: 50px auto;">
         <h1>Sửa chức vụ</h1>
         <br>
         <label for="txtMaChucVu">Mã chức vụ</label>
-        <input type="text" name="txtMaChucVu" placeholder="Nhập mã chức vụ" value="<?php echo $row['machucvu'] ?>"
-            readonly>
+        <input type="text" name="txtMaChucVu" placeholder="Nhập mã chức vụ" class="highlight"
+            value="<?php echo $row['machucvu'] ?>" readonly>
         <br>
         <label for="txtTenChucVu">Tên chức vụ</label>
         <input type="text" name="txtTenChucVu" placeholder="Nhập tên chức vụ" value="<?php echo $row['tenchucvu'] ?>"
             required>
         <br>
-        <button name="btnSua" onclick="return confirm('Xác nhận thông tin sửa')">Sửa</button>
-        <button name="btnThoat" onclick="return confirm('Những thao tác hiện tại sẽ mất')">Thoát</button>
+        <br>
+        <br>
+        <div class="hang">
+            <div class="cot">
+                <button name="btnSua" style="width: 40%;" class="buttonThem" onclick="return confirm('Xác nhận thông tin sửa')">Sửa</button>
+            </div>
+            <div class="cot">
+                <button name="btnThoat" style="width: 40%;" class="buttonTimKiem"
+                    onclick="return confirm('Những thao tác hiện tại sẽ mất')">Thoát</button>
+            </div>
+        </div>
+
+
     </form>
 </body>
 

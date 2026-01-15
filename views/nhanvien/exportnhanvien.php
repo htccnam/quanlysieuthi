@@ -8,7 +8,7 @@ header("Content-Disposition: attachment ; filename=danhsach.csv");
 $output = fopen("php://output","w");
 echo "\xEF\xBB\xBF";
 
-fputcsv($output,['manhanvien','tennhanvien','ngaysinh','diachi','sodienthoai'] , ';');
+fputcsv($output,['manhanvien','tennhanvien','ngaysinh','gioitinh','sodienthoai','email','diachi','machucvu'] , ';');
 
 $sql ="SELECT * FROM nhanvien WHERE manhanvien LIKE '%$textMaNhanVien%'";
 $result = mysqli_query($con,$sql);
@@ -19,8 +19,11 @@ while ($row = mysqli_fetch_assoc($result)){
        $row['manhanvien'],
        $row['tennhanvien'],
        $row['ngaysinh'],
+       $row['gioitinh'],
+       $row['sodienthoai'],
+       $row['email'],
        $row['diachi'],
-       $row['sodienthoai']
+       $row['machucvu']
     ] , ';'
     );
 }

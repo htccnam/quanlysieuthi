@@ -24,16 +24,30 @@
         $giaBan = $_POST['txtGiaBan'];
         $dvt = $_POST['txtDVT'];
 
-        $sqlUpdate = "UPDATE sanpham SET 
-                      tensanpham='$tenSP', maloai='$maLoai', manhacungcap='$maNCC', 
-                      xuatxu='$xuatXu', soluong='$soLuong', ngaysanxuat='$ngaySX', hansudung='$hanSD',
-                      tinhtrang='$tinhTrang', gianhap='$giaNhap', giaban='$giaBan', donvitinh='$dvt'
-                      WHERE masanpham='$maSP'";
+  if ($soLuong < 0) {
+            echo "<script>alert('Lỗi: Số lượng không được là số âm!');</script>";
+        } 
+        elseif ($giaNhap <= 0 || $giaBan <= 0) {
+            echo "<script>alert('Lỗi: Giá nhập và Giá bán phải lớn hơn 0!');</script>";
+        }
+        elseif ($giaBan < $giaNhap) {
+            echo "<script>alert('Cảnh báo: Giá bán ($giaBan) thấp hơn Giá nhập ($giaNhap). Bạn sẽ bị lỗ vốn!');</script>";
+        }
+        elseif (strtotime($ngaySX) > strtotime($hanSD)) {
+             echo "<script>alert('Lỗi logic: Ngày sản xuất không được lớn hơn Hạn sử dụng!');</script>";
+        }
+        else {
+            $sqlUpdate = "UPDATE sanpham SET 
+                          tensanpham='$tenSP', maloai='$maLoai', manhacungcap='$maNCC', 
+                          xuatxu='$xuatXu', soluong='$soLuong', ngaysanxuat='$ngaySX', hansudung='$hanSD',
+                          tinhtrang='$tinhTrang', gianhap='$giaNhap', giaban='$giaBan', donvitinh='$dvt'
+                          WHERE masanpham='$maSP'"; 
 
-        if(mysqli_query($con, $sqlUpdate)){
-            echo "<script>alert('Sửa thành công'); window.location='quanlysanpham.php';</script>";
-        } else {
-            echo "<script>alert('Lỗi: " . mysqli_error($con) . "');</script>";
+            if(mysqli_query($con, $sqlUpdate)){
+                echo "<script>alert('Sửa thành công'); window.location='quanlysanpham.php';</script>";
+            } else {
+                echo "<script>alert('Lỗi SQL: " . mysqli_error($con) . "');</script>";
+            }
         }
     }
 ?>
