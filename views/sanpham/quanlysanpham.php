@@ -3,32 +3,53 @@
     $dsLoai = mysqli_query($con, "SELECT * FROM loaihang");
     $dsNCC = mysqli_query($con, "SELECT * FROM nhacungcap");
 
+ // 3. XỬ LÝ CHỨC NĂNG THÊM MỚI (ĐÃ BỔ SUNG RÀNG BUỘC)
     if(isset($_POST['btnThem'])){
+        // Lấy dữ liệu
         $maSP = $_POST['txtMaSP'];
         $tenSP = $_POST['txtTenSP'];
         $maLoai = $_POST['slMaLoai'];
         $maNCC = $_POST['slMaNCC'];
         $xuatXu = $_POST['txtXuatXu'];
-        $soLuong = $_POST['txtSoLuong'];
+        
+        // Ép kiểu số để so sánh cho chuẩn
+        $soLuong = (int)$_POST['txtSoLuong']; 
+        $giaNhap = (float)$_POST['txtGiaNhap'];
+        $giaBan = (float)$_POST['txtGiaBan'];
+        
         $ngaySX = $_POST['txtNgaySX'];
         $hanSD = $_POST['txtHanSD'];
         $tinhTrang = $_POST['slTinhTrang']; 
-        $giaNhap = $_POST['txtGiaNhap'];
-        $giaBan = $_POST['txtGiaBan'];
         $dvt = $_POST['txtDVT'];
 
-        $check = mysqli_query($con, "SELECT masanpham FROM sanpham WHERE masanpham='$maSP'");
-        if(mysqli_num_rows($check) > 0){
-            echo "<script>alert('Mã sản phẩm $maSP đã tồn tại!');</script>";
-        } else {
-            $sqlInsert = "INSERT INTO sanpham 
-            (masanpham, tensanpham, maloai, manhacungcap, xuatxu, soluong, ngaysanxuat, hansudung, tinhtrang, gianhap, giaban, donvitinh) 
-            VALUES 
-            ('$maSP', '$tenSP', '$maLoai', '$maNCC', '$xuatXu', '$soLuong', '$ngaySX', '$hanSD', '$tinhTrang', '$giaNhap', '$giaBan', '$dvt')";
-            if(mysqli_query($con, $sqlInsert)){
-                echo "<script>alert('Thêm thành công!'); window.location='quanlysanpham.php';</script>";
+        if ($soLuong < 0) {
+            echo "<script>alert('Lỗi: Số lượng không được là số âm!');</script>";
+        } 
+        elseif ($giaNhap <= 0 || $giaBan <= 0) {
+            echo "<script>alert('Lỗi: Giá nhập và Giá bán phải lớn hơn 0!');</script>";
+        }
+
+        elseif ($giaBan < $giaNhap) {
+            echo "<script>alert('Cảnh báo: Giá bán ($giaBan) đang thấp hơn Giá nhập ($giaNhap). Bạn sẽ bị lỗ vốn!');</script>";
+        }
+        elseif (strtotime($ngaySX) > strtotime($hanSD)) {
+             echo "<script>alert('Lỗi logic: Ngày sản xuất không được lớn hơn Hạn sử dụng!');</script>";
+        }
+        else {     
+            $check = mysqli_query($con, "SELECT masanpham FROM sanpham WHERE masanpham='$maSP'");
+            if(mysqli_num_rows($check) > 0){
+                echo "<script>alert('Mã sản phẩm $maSP đã tồn tại!');</script>";
             } else {
-                echo "<script>alert('Lỗi thêm: " . mysqli_error($con) . "');</script>";
+                $sqlInsert = "INSERT INTO sanpham 
+                (masanpham, tensanpham, maloai, manhacungcap, xuatxu, soluong, ngaysanxuat, hansudung, tinhtrang, gianhap, giaban, donvitinh) 
+                VALUES 
+                ('$maSP', '$tenSP', '$maLoai', '$maNCC', '$xuatXu', '$soLuong', '$ngaySX', '$hanSD', '$tinhTrang', '$giaNhap', '$giaBan', '$dvt')";
+                
+                if(mysqli_query($con, $sqlInsert)){
+                    echo "<script>alert('Thêm thành công!'); window.location='quanlysanpham.php';</script>";
+                } else {
+                    echo "<script>alert('Lỗi thêm: " . mysqli_error($con) . "');</script>";
+                }
             }
         }
     }
@@ -146,7 +167,7 @@
                             <input type="number" name="txtSoLuong" placeholder="Số lượng" required>
                         </div>
                         <div class="form-col">
-                            <input type="text" name="txtDVT" placeholder="Đơn vị (Hộp/Cái)" required>
+                            <input type="text" name="txtDVT" placeholder="Đơn vị" required>
                         </div>
                     </div>
                 </div>
