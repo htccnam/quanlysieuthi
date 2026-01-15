@@ -50,7 +50,7 @@ $row = mysqli_fetch_assoc($result);
 
 <form method="POST" style="width:450px">
     <label>Mã khách hàng</label>
-    <input value="<?= $row['makhachhang'] ?>" readonly>
+    <input value="<?= $row['makhachhang'] ?>" class="highlight" readonly>
 
     <label>Tên khách hàng</label>
     <input name="txtTenKH" value="<?= $row['tenkhachhang'] ?>" required>

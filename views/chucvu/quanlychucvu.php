@@ -85,7 +85,7 @@ try {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
                                 echo "<tr>";
-                                echo "<td>" . $row['machucvu'] . "</td>";
+                                echo "<td class='highlight'>" . $row['machucvu'] . "</td>";
                                 echo "<td>" . $row['tenchucvu'] . "</td>";
                                 echo "<td>";
                                 echo "<a href='suachucvu.php?machucvu=" . $row['machucvu'] . "' target ='contentFrame' class='buttonSua'>Sửa</a>";

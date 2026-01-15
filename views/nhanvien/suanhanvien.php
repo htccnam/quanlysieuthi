@@ -50,7 +50,7 @@ $resultSelectChucVu = mysqli_execute_query($con, "select * from chucvu");
         <h1>quản lý nhân viên</h1>
         <br>
         <label for="txtMaNhanVien">Mã nhân viên</label>
-        <input type="text" name="txtMaNhanVien" value="<?php echo $rowNhanVien['manhanvien'] ?>" readonly>
+        <input type="text" name="txtMaNhanVien" class="hl" value="<?php echo $rowNhanVien['manhanvien'] ?>" readonly>
 
         <br>
         <label for="txtTenNhanVien">Tên nhân viên</label>

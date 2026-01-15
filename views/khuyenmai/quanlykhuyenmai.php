@@ -91,7 +91,7 @@ $result = mysqli_execute_query($con, $sqlSelect);
                         <?php
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
-                            echo "<td>{$row['makhuyenmai']}</td>";
+                            echo "<td class='highlight'>{$row['makhuyenmai']}</td>";
                             echo "<td>{$row['tenkhuyenmai']}</td>";
                             echo "<td>{$row['mota']}</td>";
                             echo "<td>{$row['sotiengiam']}</td>";

@@ -43,7 +43,7 @@ $row = mysqli_fetch_assoc($result);
         <h1>Sửa chức vụ</h1>
         <br>
         <label for="txtMaChucVu">Mã chức vụ</label>
-        <input type="text" name="txtMaChucVu" placeholder="Nhập mã chức vụ" value="<?php echo $row['machucvu'] ?>"
+        <input type="text" name="txtMaChucVu" placeholder="Nhập mã chức vụ" class="highlight" value="<?php echo $row['machucvu'] ?>"
             readonly>
         <br>
         <label for="txtTenChucVu">Tên chức vụ</label>

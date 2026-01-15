@@ -1,7 +1,7 @@
 <?php
 include_once("../connectdb.php");
 
-$maxNgaySinh=date('d/m/Y',strtotime('-18 years'));
+$maxNgaySinh=date('Y/m/d',strtotime('-18 years'));
 if (isset($_POST['btnThem'])) {
     $textMaNhanVien = $_POST['txtMaNhanVien'];
     $textTenNhanVien = $_POST['txtTenNhanVien'];
@@ -117,7 +117,7 @@ if (isset($_POST['txtCheckExport'])) {
 
             <div class="hang">
                 <div class="cot"><label for="txtSoDienThoai">Số điện thoại</label>
-                    <input type="number" name="txtSoDienThoai" placeholder="Nhập số điện thoại" required>
+                    <input type="number" name="txtSoDienThoai" pattern="[0-9]{10,11}" placeholder="Nhập số điện thoại" required>
                 </div>
 
                 <div class="cot"> <label for="txtEmail">Email</label>
@@ -170,7 +170,7 @@ if (isset($_POST['txtCheckExport'])) {
                     </div>
                 </div>
             </form>
-            <h1>Danh sách nhân viên</h1>
+            <h1 class="highlight">Danh sách nhân viên</h1>
             <div class="thanhkeotable">
                 <table>
                 <thead>
@@ -190,7 +190,7 @@ if (isset($_POST['txtCheckExport'])) {
                     if ($resultTimKiem && mysqli_num_rows($resultTimKiem) > 0) {
                         while ($row = mysqli_fetch_assoc($resultTimKiem)) {
                             echo "<tr>";
-                            echo "<td>" . $row['manhanvien'] . "</td>";
+                            echo "<td class='highlight'>" . $row['manhanvien'] . "</td>";
                             echo "<td>" . $row['tennhanvien'] . "</td>";
                             echo "<td>" . $row['ngaysinh'] . "</td>";
                             echo "<td>" . $row['gioitinh'] . "</td>";

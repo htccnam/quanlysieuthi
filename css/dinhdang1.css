@@ -25,7 +25,7 @@ body {
         border: 2px solid black;
         box-sizing: border-box;
         border-radius: 5px;
-
+        background-color: rgb(236, 230, 236);
 
     }
 
@@ -65,6 +65,18 @@ body {
 
         padding: 15px 20px;
         white-space: nowrap;
+    }
+    .highlight{
+        color: rgb(4, 90, 4);
+        font-weight: bold;
+        font-style:italic ;
+        background-color: bisque;
+    }
+    input.hl{
+        color: rgb(4, 90, 4);
+        font-weight: bold;
+        font-style:italic ;
+        background-color: bisque;
     }
     .thanhkeotable{
         overflow-x: auto;

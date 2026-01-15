@@ -46,7 +46,7 @@ $row = mysqli_fetch_assoc($result);
         <h1>Sửa khuyến mãi</h1>
 
         <label>Mã khuyến mãi</label>
-        <input type="text" name="txtMaKhuyenMai" value="<?php echo $row['makhuyenmai'] ?>" readonly>
+        <input type="text" name="txtMaKhuyenMai" value="<?php echo $row['makhuyenmai'] ?>" class="highlight" readonly>
 
         <label>Tên khuyến mãi</label>
         <input type="text" name="txtTenKhuyenMai" value="<?php echo $row['tenkhuyenmai'] ?>" required>
