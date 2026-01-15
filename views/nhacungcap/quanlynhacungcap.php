@@ -25,10 +25,18 @@ if (isset($_POST['btnThem'])) {
 }
 
 if (isset($_GET['btnXoa'])) {
-    $txtManhacungcapForm = $_GET['manhacungcap'];
+    $maXoa = $_GET['manhacungcap'];
+    $checkSP = mysqli_query($con,"SELECT * FROM sanpham WHERE manhacungcap='$maXoa'");
+    if(mysqli_num_rows($checkSP)>0){
+        echo " <script> 
+            alert('Cảnh báo: Nhà cung cấp này đang cung cấp hàng hóa trong kho. Bạn phải xóa sản phẩm trước!');
+            window.loction='quanlynhacungcap.php';
+        </script> ";
+    }else{
     $sqlDelete = "DELETE FROM nhacungcap WHERE manhacungcap = '$txtManhacungcapForm'";
     mysqli_query($con, $sqlDelete);
     echo "<script> alert('Xóa thành công'); window.location='quanlynhacungcap.php'; </script>";
+}
 }
 
 $txtTimKiem = "";
