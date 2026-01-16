@@ -86,7 +86,7 @@ $database = "quanlysieuthi";
 * Truy cập:
 
 ```text
-http://localhost/REPOSITORY_NAME/
+http://localhost/quanlysieuthi/
 ```
 
 ---
@@ -95,7 +95,7 @@ http://localhost/REPOSITORY_NAME/
 
 ```text
 Username: admin
-Password: admin123
+Password: admin
 ```
 
 > (Có thể chỉnh trong bảng `taikhoan`)
