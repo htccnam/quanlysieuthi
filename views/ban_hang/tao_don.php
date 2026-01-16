@@ -2,7 +2,6 @@
 session_start();
 $con = mysqli_connect('localhost', "root", "", "quanlysieuthi");
 
-// --- 1. ĐỒNG BỘ DỮ LIỆU FORM VÀ SESSION ---
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['old_data'] = [
         'madonhang' => $_POST['madonhang'] ?? '',
@@ -20,7 +19,6 @@ $old = $_SESSION['old_data'] ?? [
     'makhachhang' => '', 'phuongthucban' => 'Tại quầy', 'thanhtoan' => 'Tiền mặt', 'makhuyenmai' => ''
 ];
 
-// --- 2. LOGIC THÊM SẢN PHẨM (Chống trùng khi F5) ---
 if (isset($_POST['action']) && $_POST['action'] == 'add_product') {
     $search = $_POST['ten_sp_search'] ?? '';
     $sl_mua = (int)($_POST['sl_input'] ?? 1);
@@ -52,26 +50,38 @@ if (isset($_POST['action']) && $_POST['action'] == 'add_product') {
             }
         }
     }
-    header("Location: " . $_SERVER['PHP_SELF']); // Chuyển hướng về chính nó để xóa dữ liệu POST
+    header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
-// --- 3. LOGIC LƯU ĐƠN HÀNG ---
 if (isset($_POST['btn_save_order'])) {
     $madon = $old['madonhang'];
     if (!empty($_SESSION['cart']) && !empty($madon)) {
+        
+        $calc_subtotal = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $calc_subtotal += $item['soluong'] * $item['dongia'];
+        }
+        
+        $calc_discount = 0;
+        if (!empty($old['makhuyenmai'])) {
+            $km_q = $con->query("SELECT sotiengiam FROM khuyenmai WHERE makhuyenmai = '{$old['makhuyenmai']}'");
+            if ($km_d = $km_q->fetch_assoc()) {
+                $calc_discount = $km_d['sotiengiam'];
+            }
+        }
+        $final_total_db = max(0, $calc_subtotal - $calc_discount);
+
         $check_exist = $con->query("SELECT madonhang FROM donhang WHERE madonhang = '$madon'");
         if ($check_exist->num_rows > 0) {
             echo "<script>alert('Lỗi: Mã đơn hàng này đã tồn tại!');</script>";
         } else {
-            $final_total = $_POST['tongtien_sau_km'];
-            $km_val = !empty($old['makhuyenmai']) ? "'".$old['makhuyenmai']."'" : "NULL";
+            $km_val = !empty($old['makhuyenmai']) ? "'" . $old['makhuyenmai'] . "'" : "NULL";
 
             $sql_dh = "INSERT INTO donhang (madonhang, makhachhang, manhanvien, makhuyenmai, ngaylap, phuongthucban, thanhtoan, tongtien) 
-                       VALUES ('$madon', '{$old['makhachhang']}', '{$old['manhanvien']}', $km_val, '{$old['ngaylap']}', '{$old['phuongthucban']}', '{$old['thanhtoan']}', '$final_total')";
+                       VALUES ('$madon', '{$old['makhachhang']}', '{$old['manhanvien']}', $km_val, '{$old['ngaylap']}', '{$old['phuongthucban']}', '{$old['thanhtoan']}', '$final_total_db')";
 
             if ($con->query($sql_dh)) {
-                // Sử dụng cleaned_cart để gộp dữ liệu lần cuối trước khi INSERT
                 $cleaned_cart = [];
                 foreach ($_SESSION['cart'] as $item) {
                     $id_sp = $item['masanpham'];
@@ -81,10 +91,17 @@ if (isset($_POST['btn_save_order'])) {
                 }
 
                 foreach ($cleaned_cart as $item) {
-                    $tt_item = $item['soluong'] * $item['dongia'];
-                    $sql = "INSERT INTO chitietdonhang (madonhang, masanpham, tensanpham, soluong, dongia, thanhtien) 
-                            VALUES ('$madon', '{$item['masanpham']}', '{$item['tensanpham']}', '{$item['soluong']}', '{$item['dongia']}', '$tt_item')";
-                    $con->query($sql);
+                    $ma = $item['masanpham'];
+                    $sl = $item['soluong'];
+                    $gia = $item['dongia'];
+                    $tt_item = $sl * $gia;
+
+                    $sql_ct = "INSERT INTO chitietdonhang (madonhang, masanpham, tensanpham, soluong, dongia, thanhtien) 
+                               VALUES ('$madon', '$ma', '{$item['tensanpham']}', '$sl', '$gia', '$tt_item')";
+                    $con->query($sql_ct);
+
+                    $sql_update_kho = "UPDATE sanpham SET soluong = soluong - $sl WHERE masanpham = '$ma'";
+                    $con->query($sql_update_kho);
                 }
                 // tính điểm tích lũy
                 if (!empty($old_kh)) {
@@ -103,14 +120,13 @@ if (isset($_POST['btn_save_order'])) {
 
                 unset($_SESSION['cart']);
                 unset($_SESSION['old_data']);
-                echo "<script>alert('Lưu đơn hàng thành công!'); window.location.href='thong_tin.php';</script>";
+                echo "<script>alert('Lưu đơn hàng và trừ kho thành công!'); window.location.href='thong_tin.php';</script>";
                 exit();
             }
         }
     }
 }
 
-// Logic xóa
 if (isset($_GET['delete'])) {
     $idx = $_GET['delete'];
     if (isset($_SESSION['cart'][$idx])) {
@@ -128,7 +144,6 @@ if (isset($_GET['delete'])) {
     <meta charset="UTF-8">
     <title>Tạo Đơn Hàng</title>
     <style>
-        /* Giữ nguyên CSS của bạn */
         :root { --primary: #3498db; --success: #2ecc71; --dark: #34495e; --bg: #f4f7f6; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 20px; color: var(--dark); }
         .grid { display: grid; grid-template-columns: 350px 1fr; gap: 20px; }
@@ -211,7 +226,7 @@ if (isset($_GET['delete'])) {
                 <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: flex-end;">
                     <div style="flex: 2;">
                         <label>Sản phẩm (Mã hoặc Tên)</label>
-                        <input name="ten_sp_search" list="list_sp">
+                        <input name="ten_sp_search" list="list_sp" autocomplete="off">
                         <datalist id="list_sp">
                             <?php $sps = $con->query("SELECT masanpham, tensanpham FROM sanpham");
                             while ($s = $sps->fetch_assoc()) echo "<option value='{$s['masanpham']}'>{$s['tensanpham']}</option>"; ?>
@@ -254,18 +269,17 @@ if (isset($_GET['delete'])) {
                 <div class="total-area">
                     <p>Tạm tính: <b><?= number_format($subtotal) ?> đ</b></p>
                     <?php
-                    $discount = 0;
+                    $final_discount = 0;
                     if (!empty($old['makhuyenmai'])) {
                         $km_q = $con->query("SELECT sotiengiam FROM khuyenmai WHERE makhuyenmai = '{$old['makhuyenmai']}'");
                         if ($km_d = $km_q->fetch_assoc()) {
-                            $discount = $km_d['sotiengiam'];
-                            echo "<p class='discount-text'>Khuyến mãi: -" . number_format($discount) . " đ</p>";
+                            $final_discount = $km_d['sotiengiam'];
+                            echo "<p class='discount-text'>Khuyến mãi: -" . number_format($final_discount) . " đ</p>";
                         }
                     }
-                    $grand_total = max(0, $subtotal - $discount);
+                    $grand_total_display = max(0, $subtotal - $final_discount);
                     ?>
-                    <h2 style="color:var(--primary); margin: 5px 0;">Tổng: <?= number_format($grand_total) ?> đ</h2>
-                    <input type="hidden" name="tongtien_sau_km" value="<?= $grand_total ?>">
+                    <h2 style="color:var(--primary); margin: 5px 0;">Tổng: <?= number_format($grand_total_display) ?> đ</h2>
                 </div>
             </div>
         </div>
